@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Capstone.MainPage"
+             xmlns:viewmodel="clr-namespace:Capstone.Controller"
+             xmlns:models="clr-namespace:Capstone.Model"
+             x:DataType="viewmodel:ProjectController"
+             >
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Label
+                Text="Hello, World!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+            <VerticalStackLayout>
+                <Button Text="add project" Clicked="Add_Project_Click"></Button>
+                <Entry 
+                    Text="{Binding InputProject.Title}"
+                    Placeholder="input proj name"
+                 ></Entry>
+                <Entry 
+                   Text="{Binding InputEntry.Title}"
+                   Placeholder="input entry name"
+                ></Entry>
+                <Label Text="{Binding Source={x:Reference test},Path=Text}"></Label>
+                <Entry x:Name="test"></Entry>
+            </VerticalStackLayout>
+
+            <CollectionView ItemsSource="{Binding ProjectList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Project">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Title}"/>
+                            <Label Text="{Binding Index}"/>
+                            <Button Text="test" Clicked="Test_Click"></Button>
+                            
+                            <CollectionView ItemsSource="{Binding EntryList}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ProjEntry">
+                                        <HorizontalStackLayout>
+                                            <Label Text="    - "></Label>
+                                            <Label Text="{Binding Title}"/>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
