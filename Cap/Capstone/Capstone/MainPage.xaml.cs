@@ -19,9 +19,22 @@ namespace Capstone
             controller.addProjectClick();
         }
 
-        private void Test_Click(object sender, EventArgs e)
+        private void Add_Entry_Click(object sender, EventArgs e)
         {
+            Button? clickedButt = sender as Button;
+            if (clickedButt != null) { 
+                int buttId;
+                if (int.TryParse(clickedButt.CommandParameter.ToString(), out buttId))
+                {
+                    controller.addEntryByProjectIdClick(buttId);
+                }
+            }
+            
         }
+
+        //private void Test_Click(object sender, EventArgs e)
+        //{
+        //}
 
         //private void OnCounterClicked(object? sender, EventArgs e)
         //{

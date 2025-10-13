@@ -8,54 +8,136 @@
              >
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-            <VerticalStackLayout>
-                <Button Text="add project" Clicked="Add_Project_Click"></Button>
-                <Entry 
+        <HorizontalStackLayout>
+            <VerticalStackLayout
+                WidthRequest="200"
+                Margin="20,0,50,0"
+                >
+                <Label
+                    Text="Create Project"
+                    FontSize="30"
+                    />
+                <Entry
                     Text="{Binding InputProject.Title}"
-                    Placeholder="input proj name"
-                 ></Entry>
-                <Entry 
-                   Text="{Binding InputEntry.Title}"
-                   Placeholder="input entry name"
-                ></Entry>
-                <Label Text="{Binding Source={x:Reference test},Path=Text}"></Label>
-                <Entry x:Name="test"></Entry>
-            </VerticalStackLayout>
+                    Placeholder="Project Name"
+                    />
+                <Entry
+                    Text="{Binding InputProject.ProjectImage}"
+                    Placeholder="Project Image"
+                    />
+                <Button
+                    Text="Submit Project"
+                    Clicked="Add_Project_Click"
+                    Margin="20,0,0,0"/>
+                <Label
+                    Text="Create Entry"
+                    FontSize="30"
+                    />
 
+                <Entry
+                        Text="{Binding InputEntry.Title}"
+                        Placeholder="Entry Name"
+                        />
+                <Entry
+                        Text="{Binding InputEntry.Status}"
+                        Placeholder="Entry Status"
+                        />
+                <DatePicker
+                        Date="{Binding InputEntry.Date}"
+                        />
+                <Entry
+                        Text="{Binding InputEntry.EntryDocument}"
+                        Placeholder="Entry Status "
+                        />
+
+
+                <Entry x:Name="test"
+                       Margin="0,200,0,0"
+                       ></Entry>
+                <Label Text="{Binding Source={x:Reference test},Path=Text}"></Label>
+
+
+
+            </VerticalStackLayout>
             <CollectionView ItemsSource="{Binding ProjectList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Project">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Title}"/>
-                            <Label Text="{Binding Index}"/>
-                            <Button Text="test" Clicked="Test_Click"></Button>
-                            
-                            <CollectionView ItemsSource="{Binding EntryList}">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:ProjEntry">
-                                        <HorizontalStackLayout>
-                                            <Label Text="    - "></Label>
-                                            <Label Text="{Binding Title}"/>
-                                        </HorizontalStackLayout>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
+                        <Border
+                            Stroke="DimGrey"
+                            StrokeThickness="3"
+                            Padding="20"
+                            >
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Project:"
+                                           Margin="0,0,10,0"
+                                           FontSize="30"/>
+                                    <Label Text="{Binding Title}"
+                                           FontSize="30"/>
+                                    <Label Text="("
+                                           Margin="10,0,0,0"
+                                           FontSize="30"/>
+                                    <Label Text="{Binding Id}"
+                                           FontSize="30"/>
+                                    <Label Text=")"
+                                           FontSize="30"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Image:"
+                                                   Margin="0,0,10,0"
+                                                   FontSize="20"/>
+                                    <Label Text="{Binding ProjectImage}"
+                                                     FontSize="20"/>
+                                </HorizontalStackLayout>
+                                <Button
+                                    Text="Submit Entry to Project"
+                                    Clicked="Add_Entry_Click"
+                                    CommandParameter="{Binding Id}"
+                                    />
 
+                                <CollectionView ItemsSource="{Binding EntryList}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ProjEntry">
+                                            <VerticalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Entry:"
+                                                   Margin="0,0,10,0"
+                                                   FontSize="20"/>
+                                                    <Label Text="{Binding Title}"
+                                                     FontSize="20"/>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Status:"
+                                                   Margin="0,0,10,0"
+                                                   FontSize="15"/>
+                                                    <Label Text="{Binding Status}"
+                                                     FontSize="15"/>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Date:"
+                                                   Margin="0,0,10,0"
+                                                   FontSize="15"/>
+                                                    <Label Text="{Binding Date}"
+                                                     FontSize="15"/>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Entry Doc:"
+                                                   Margin="0,0,10,0"
+                                                   FontSize="15"/>
+                                                    <Label Text="{Binding EntryDocument}"
+                                                     FontSize="15"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
 
-                        </VerticalStackLayout>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            
-        </VerticalStackLayout>
+        </HorizontalStackLayout>
     </ScrollView>
 
 </ContentPage>

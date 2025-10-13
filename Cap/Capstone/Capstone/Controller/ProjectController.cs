@@ -17,24 +17,40 @@ namespace Capstone.Controller
 
         public ProjectController() {
             ProjectList = new ObservableCollection<Project>();
-            InputProject = new Project("New Project");
-            InputEntry = new ProjEntry("New Entry");
-            testData();
+            InputProject = new Project();
+            InputEntry = new ProjEntry();
+        }
+
+        private Project findProjectById(int id)
+        {
+            //ProjectList.OrderBy(x => x.Id);
+            return ProjectList.First(x => x.Id == id);
+
+        }
+
+        public void addEntryByProjectIdClick(int id) { 
+            Project found = findProjectById(id);
+            if (found != null) { 
+                addEntryToProject(found, InputEntry.createDuplicate());
+                InputEntry.resetValues();
+            }
+        }
+
+        public void addEntryToProject(Project project, ProjEntry inputEntry) { 
+            project.addEntry(inputEntry);
         }
 
         public void addProjectClick() {
-            string title = InputProject.Title;
-            addProject(new Project(title));
+            addProject(InputProject.createDuplicate());
+            InputProject.resetValues();
         }
         private void addProject(Project input) {
-            int index = ProjectList.Count + 1;
-            input.Index = index;
+            int id = ProjectList.Count + 1;
+            input.Id = id;
             ProjectList.Add(input);
         }
-        public void testData() {
-            addProject(new Project("Egg"));
-            addProject(new Project("Red Wood"));
-            addProject(new Project("Essay"));
-        }
+
+
+        
     }
 }

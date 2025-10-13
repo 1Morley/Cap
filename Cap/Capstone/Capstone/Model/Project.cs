@@ -11,6 +11,7 @@ namespace Capstone.Model
     internal class Project : INotifyPropertyChanged
     {
         private string title;
+
         public string Title {
             get
             {
@@ -23,28 +24,60 @@ namespace Capstone.Model
             }
         }
 
-        public int Index { get; set; }
+        private string projectImage;
+
+        public string ProjectImage
+        {
+            get
+            {
+                return projectImage;
+            }
+            set
+            {
+                projectImage = value;
+                OnPropertyChanged(nameof(ProjectImage));
+            }
+        }
+        
+        private int id;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
 
 
         public ObservableCollection<ProjEntry> EntryList { get; set; }
-        public Project(string title) {
-            Title = title;
-            EntryList = new ObservableCollection<ProjEntry>();
-
+        public Project() {
+            resetValues();
         }
   
-        public void addEntry(string title)
+        public void addEntry(ProjEntry input)
         {
-            EntryList.Add(new ProjEntry(title));
-        }
-        public void testData()
-        {
-            addEntry("thing");
-            addEntry("aaa");
+            EntryList.Add(input);
         }
 
+        public void resetValues()
+        {
+            Title = "New Project";
+            ProjectImage = "Default";
+            EntryList = new ObservableCollection<ProjEntry>();
+        }
 
-
+        public Project createDuplicate() {
+            Project newProject = new Project();
+            newProject.Title = Title;
+            newProject.ProjectImage = ProjectImage;
+            return newProject;
+        }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
