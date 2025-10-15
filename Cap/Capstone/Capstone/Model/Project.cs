@@ -38,21 +38,9 @@ namespace Capstone.Model
                 OnPropertyChanged(nameof(ProjectImage));
             }
         }
-        
-        private int id;
 
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = value;
-                OnPropertyChanged(nameof(Id));
-            }
-        }
+        public int Id { get; set; }
+
 
 
         public ObservableCollection<ProjEntry> EntryList { get; set; }
@@ -62,13 +50,38 @@ namespace Capstone.Model
   
         public void addEntry(ProjEntry input)
         {
+            int id;
+            if (EntryList.Count == 0)
+            {
+                id = 0;
+            }
+            else
+            {
+                id = EntryList.Max(x => x.Id) + 1;
+            }
+            input.Id=id;
             EntryList.Add(input);
         }
+
+        private ProjEntry FindEntryById(int id)
+        {
+            return EntryList.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void DeleteEntry(int Id)
+        {
+            ProjEntry found = FindEntryById(Id);
+            if (found != null)
+            {
+                EntryList.Remove(found);
+            }
+        }
+
 
         public void resetValues()
         {
             Title = "New Project";
-            ProjectImage = "Default";
+            ProjectImage = "Default.png";
             EntryList = new ObservableCollection<ProjEntry>();
         }
 
@@ -78,6 +91,8 @@ namespace Capstone.Model
             newProject.ProjectImage = ProjectImage;
             return newProject;
         }
+
+
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -38,17 +38,17 @@ namespace Capstone.Model
             }
         }
 
-        private DateTime date;
+        private DateTime dueDate;
 
-        public DateTime Date {
+        public DateTime DueDate {
             get
             {
-                return date;
+                return dueDate;
             }
             set
             {
-                date = value;
-                OnPropertyChanged(nameof(Date));
+                dueDate = value;
+                OnPropertyChanged(nameof(DueDate));
             }
         }
 
@@ -66,6 +66,10 @@ namespace Capstone.Model
                 OnPropertyChanged(nameof(EntryDocument));
             }
         }
+
+        public int Id { get; set; }
+        
+
         public ProjEntry() { 
             resetValues();
         }
@@ -81,14 +85,14 @@ namespace Capstone.Model
         public void resetValues() {
             Title = "New Entry";
             Status = "Null";
-            Date = DateTime.Now;
+            DueDate = DateTime.Now;
             EntryDocument = "Null";
         }
 
         public ProjEntry createDuplicate() { 
             ProjEntry newEntry = new ProjEntry();
             newEntry.Title = Title;
-            newEntry.Date = Date;
+            newEntry.DueDate = DueDate;
             newEntry.Status = Status;
             newEntry.EntryDocument = EntryDocument;
             return newEntry;
