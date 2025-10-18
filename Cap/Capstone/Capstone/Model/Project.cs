@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.Controller;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,8 +20,11 @@ namespace Capstone.Model
             }
             set
             {
-                title = value;
-                OnPropertyChanged(nameof(Title));
+                if (InputValidator.IsValidString(value))
+                {
+                    title = value;
+                    OnPropertyChanged(nameof(Title));
+                }
             }
         }
 
@@ -34,21 +38,35 @@ namespace Capstone.Model
             }
             set
             {
-                projectImage = value;
-                OnPropertyChanged(nameof(ProjectImage));
+                if (InputValidator.IsValidString(value))
+                {
+                    projectImage = value;
+                    OnPropertyChanged(nameof(ProjectImage));
+                }
             }
         }
 
-        public int Id { get; set; }
+        public int Id { get; }
 
 
 
-        public ObservableCollection<ProjEntry> EntryList { get; set; }
-        public Project() {
-            resetValues();
+        public ObservableCollection<NoteEntry> EntryList { get; set; }
+        public Project(int id, string title, string projectImage) {
+            Title = title;
+            ProjectImage = projectImage;
+            Id = id;
+            EntryList = new ObservableCollection<NoteEntry>();
         }
   
-        public void addEntry(ProjEntry input)
+        public void addEntry(NoteEntry input)
+        {
+            if (input != null)
+            {
+                EntryList.Add(input);
+            }
+        }
+
+        public int getNextEntryId()
         {
             int id;
             if (EntryList.Count == 0)
@@ -59,41 +77,22 @@ namespace Capstone.Model
             {
                 id = EntryList.Max(x => x.Id) + 1;
             }
-            input.Id=id;
-            EntryList.Add(input);
+            return id;
         }
 
-        private ProjEntry FindEntryById(int id)
+        private NoteEntry FindEntryById(int id)
         {
             return EntryList.FirstOrDefault(x => x.Id == id);
         }
 
         public void DeleteEntry(int Id)
         {
-            ProjEntry found = FindEntryById(Id);
+            NoteEntry found = FindEntryById(Id);
             if (found != null)
             {
                 EntryList.Remove(found);
             }
         }
-
-
-        public void resetValues()
-        {
-            Title = "New Project";
-            ProjectImage = "Default.png";
-            EntryList = new ObservableCollection<ProjEntry>();
-        }
-
-        public Project createDuplicate() {
-            Project newProject = new Project();
-            newProject.Title = Title;
-            newProject.ProjectImage = ProjectImage;
-            return newProject;
-        }
-
-
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

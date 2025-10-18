@@ -24,6 +24,16 @@ namespace Capstone.Controller
 
         public void AddProject(Project input)
         {
+            if (input != null)
+            {
+                ProjectList.Add(input);
+            }
+        }
+
+        public int GetNextEntryId(int projectId) {
+            return FindProjectById(projectId).getNextEntryId();
+        }
+        public int getNextProjectId() {
             int id;
             if (ProjectList.Count == 0)
             {
@@ -33,9 +43,7 @@ namespace Capstone.Controller
             {
                 id = ProjectList.Max(x => x.Id) + 1;
             }
-
-            input.Id = id;
-            ProjectList.Add(input);
+            return id;
         }
 
         public void DeleteEntry(int projectId, int entryId)
@@ -70,10 +78,10 @@ namespace Capstone.Controller
 
         }
 
-        public void AddEntryToProjectById(int projectId, ProjEntry inputEntry)
+        public void AddEntryToProjectById(int projectId, NoteEntry inputEntry)
         {
             Project found = FindProjectById(projectId);
-            if (found != null)
+            if (inputEntry != null && found != null)
             {
                 found.addEntry(inputEntry);
             }

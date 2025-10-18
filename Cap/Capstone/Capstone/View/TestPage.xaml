@@ -5,16 +5,27 @@
              Title="TestPage">
 
     <HorizontalStackLayout>
-        <Button Text="Nav to Test page"
+        <VerticalStackLayout>
+            <Button Text="Nav to Test page"
                 Clicked="Test_Page_Click"
                 HeightRequest="20"/>
+
+            <Label x:Name="TestLabel"
+                   Text="Test"/>
+        </VerticalStackLayout>
         <VerticalStackLayout>
             <Button Text="Open File Explorer" 
                     Clicked="Test_Click"/>
-            <Label x:Name="TestLabel"
-                   Text="Test"/>
+
             <Button Text="Get File From Path"
                     Clicked="Test_File_Path"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Entry x:Name="EntryLink" 
+                   Text="https://www.youtube.com"/>
+            <Button Text="Open Link" 
+                    Clicked="Test_Link_Open"/>
         </VerticalStackLayout>
 
     </HorizontalStackLayout>

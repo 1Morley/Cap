@@ -12,6 +12,11 @@
             <Setter Property="FontSize" Value="23"/>
             <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
+        
+        <Style x:Key="Warning" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="PaleVioletRed"/>
+        </Style>
 
         <Style TargetType="Border">
             <Setter Property="Stroke" Value="CadetBlue"/>
@@ -37,6 +42,7 @@
             <Setter Property="HeightRequest" Value="600"/>
             <Setter Property="MaximumWidthRequest" Value="300"/>
         </Style>
+
     </ContentPage.Resources>
 
 
@@ -52,6 +58,10 @@
 
                         <Label Style="{StaticResource Title}"
                                Text="Create Project" />
+                        
+                        <Label x:Name="ProjectCreateWarning"
+                               Style="{StaticResource Warning}"
+                               Text=""/>
 
                         <Label Text="Project Title"/>
                         <Entry Text="{Binding InputProject.Title}"/>
@@ -70,6 +80,10 @@
                         <Label Style="{StaticResource Title}"
                                Text="Create Entry" />
 
+                        <Label x:Name="EntryCreateWarning"
+                               Style="{StaticResource Warning}"
+                               Text=""/>
+
                         <Label Text="Entry Title"/>
                         <Entry Text="{Binding InputEntry.Title}"/>
 
@@ -79,9 +93,14 @@
                         <Label Text="Due Date"/>
                         <DatePicker Date="{Binding InputEntry.DueDate}" />
 
-                        <Label Text="Doc info"/>
-                        <Entry Text="{Binding InputEntry.EntryDocument}"/>
+                        <Label Text="Notes"/>
+                        <Entry Text="{Binding InputEntry.EntryNotes}"/>
+                        
+                        <Label Text="Entry Type"/>
+                        <Entry Text="{Binding InputEntry.EntryType}"/>
 
+                        <Label Text="Entry Content"/>
+                        <Entry Text="{Binding InputEntry.EntryContent}"/>
                     </VerticalStackLayout>
                 </Border>
                 <Border>
@@ -121,7 +140,7 @@
                                 <Label Text="{Binding ProjectImage, StringFormat='Image: {0}'}"/>
                                 <CollectionView ItemsSource="{Binding EntryList}">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:ProjEntry">
+                                        <DataTemplate x:DataType="models:NoteEntry">
                                             <Border Style="{StaticResource MiniBorder}">
                                                 <VerticalStackLayout>
                                                     <HorizontalStackLayout>
@@ -139,8 +158,33 @@
                                                             Clicked="Delete_Entry_Click"
                                                             CommandParameter="{Binding Id}"/>
 
-                                                    <Label Text="{Binding EntryDocument, StringFormat='Documents: {0}'}"/>
+                                                    <Label Text="{Binding EntryNotes, StringFormat='Notes: {0}'}"/>
                                                    
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                        <DataTemplate x:DataType="models:FileEntry">
+                                            <Border Style="{StaticResource MiniBorder}">
+                                                <VerticalStackLayout>
+                                                    <HorizontalStackLayout>
+                                                        <Label Style="{StaticResource Title}"
+                                                               Text="{Binding Title, StringFormat='Entry: {0}'}"/>
+
+                                                        <Label 
+                                                               Style="{StaticResource Title}"
+                                                               Text="{Binding Id, StringFormat='({0})'}"/>
+                                                    </HorizontalStackLayout>
+                                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
+                                                    <Label Text="{Binding DueDate, StringFormat='Due Date: {0:MMM dd, yyyy}'}"/>
+
+                                                    <Button Text="Delete Entry"
+                                                            Clicked="Delete_Entry_Click"
+                                                            CommandParameter="{Binding Id}"/>
+
+                                                    <Label Text="{Binding EntryNotes, StringFormat='Notes: {0}'}"/>
+                                                    <Label Text="{Binding Path, StringFormat='FilePath: {0}'}"/>
+                                                    <Label Text="{Binding IsValidPath, StringFormat='Valid Path: {0}'}"/>
+
                                                 </VerticalStackLayout>
                                             </Border>
                                         </DataTemplate>

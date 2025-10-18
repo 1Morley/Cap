@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.Controller;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Model
 {
-    class ProjEntry : INotifyPropertyChanged
+    class NoteEntry : INotifyPropertyChanged
     {
         private string title;
         public string Title
@@ -19,13 +20,16 @@ namespace Capstone.Model
             }
             set
             {
-                title = value;
-                OnPropertyChanged(nameof(Title));
+                if (InputValidator.IsValidString(value))
+                {
+                    title = value;
+                    OnPropertyChanged(nameof(Title));
+                }
             }
         }
 
-        private string status;
-        public string Status
+        private string? status;
+        public string? Status
         {
             get
             {
@@ -38,9 +42,9 @@ namespace Capstone.Model
             }
         }
 
-        private DateTime dueDate;
+        private DateTime? dueDate;
 
-        public DateTime DueDate {
+        public DateTime? DueDate {
             get
             {
                 return dueDate;
@@ -52,26 +56,30 @@ namespace Capstone.Model
             }
         }
 
-        private string entryDocument;
+        private string? entryNotes;
 
-        public string EntryDocument
+        public string? EntryNotes
         {
             get
             {
-                return entryDocument;
+                return entryNotes;
             }
             set
             {
-                entryDocument = value;
-                OnPropertyChanged(nameof(EntryDocument));
+                entryNotes = value;
+                OnPropertyChanged(nameof(EntryNotes));
             }
         }
 
-        public int Id { get; set; }
+        public int Id { get;}
         
 
-        public ProjEntry() { 
-            resetValues();
+        public NoteEntry(int id, string title, string? status, DateTime? dueDate, string? entryNotes) { 
+            Title = title;
+            Status = status;
+            DueDate = dueDate;
+            EntryNotes = entryNotes;
+            Id = id;
         }
 
 
@@ -80,22 +88,6 @@ namespace Capstone.Model
         void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void resetValues() {
-            Title = "New Entry";
-            Status = "Null";
-            DueDate = DateTime.Now;
-            EntryDocument = "Null";
-        }
-
-        public ProjEntry createDuplicate() { 
-            ProjEntry newEntry = new ProjEntry();
-            newEntry.Title = Title;
-            newEntry.DueDate = DueDate;
-            newEntry.Status = Status;
-            newEntry.EntryDocument = EntryDocument;
-            return newEntry;
         }
     }
 }

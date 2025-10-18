@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace Capstone;
 
@@ -78,5 +79,17 @@ public partial class TestPage : ContentPage
         }
 
 
+    }
+
+    private void Test_Link_Open(object sender, EventArgs e) { 
+        string link = EntryLink.Text;
+        if (link != null) {
+            if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            {
+
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {link}") { CreateNoWindow = true });
+            }
+
+        }
     }
 }

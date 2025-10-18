@@ -12,23 +12,30 @@ namespace Capstone.Controller
     {
         public ObservableCollection<Project> ProjectList { get; set; }
 
-        public Project InputProject { get; set; }
+        public InputProject InputProject { get; set; }
 
-        public ProjEntry InputEntry { get; set; }
+        public InputEntry InputEntry { get; set; }
 
         private ProjectListController PC;
 
         public ProjectViewModel() {
             ProjectList = new ObservableCollection<Project>();
-            InputProject = new Project();
-            InputEntry = new ProjEntry();
+            InputProject = new InputProject();
+            InputEntry = new InputEntry();
             PC = new ProjectListController(ProjectList);
         }
 
-        public void AddProject() 
+        public string AddProject() 
         {
-            PC.AddProject(InputProject.createDuplicate());
-            InputProject.resetValues();
+            if (InputProject.createProject(PC.getNextProjectId(), out Project? newProj, out string message) && newProj != null)
+            {
+                PC.AddProject(newProj);
+                return string.Empty;
+            }
+            else
+            {
+                return message;
+            }
         }
 
         public void DeleteProject(int projectId)
@@ -40,10 +47,19 @@ namespace Capstone.Controller
             PC.DeleteEntry(projectId, entryId);
         }
 
-        public void AddEntryByProjectId(int projectId)
-        { 
-            PC.AddEntryToProjectById(projectId, InputEntry.createDuplicate());
-            InputEntry.resetValues();
+        public string AddEntryByProjectId(int projectId)
+        {
+            int newId = PC.GetNextEntryId(projectId);
+
+            if (InputEntry.createNoteEntry(newId, out NoteEntry? newEntry, out string message) && newEntry != null)
+            {
+                PC.AddEntryToProjectById(projectId, newEntry);
+                return string.Empty;
+            }
+            else
+            {
+                return message;
+            }
         }
 
         public void MoveProjectToNewIndex(int projectId, int newIndex) {

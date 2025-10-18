@@ -16,14 +16,16 @@ namespace Capstone
 
         private void Add_Project_Click(object sender, EventArgs e)
         {
-            controller.AddProject();
+            string message = controller.AddProject();
+            ProjectCreateWarning.Text = message;
         }
 
         private void Add_Entry_Click(object sender, EventArgs e)
         {
             int projectId = getIdFromButton(sender);
             if (projectId != -1) {
-                controller.AddEntryByProjectId(projectId);
+                string message = controller.AddEntryByProjectId(projectId);
+                EntryCreateWarning.Text = message;
             }            
         }
 
