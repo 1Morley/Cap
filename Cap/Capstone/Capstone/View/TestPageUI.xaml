@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Capstone.View.TestPageUI"
+             Title="TestPageUI"
+             BackgroundColor="Transparent">
+    <AbsoluteLayout BackgroundColor="Transparent">
+        <Button Text="Nav to Test page"
+                Clicked="Test_Page_Click"
+                HeightRequest="50"
+                AbsoluteLayout.LayoutBounds="200,5"/>
+        <Button Text="test click"
+                Clicked="Test_Full_Click"
+                HeightRequest="50"
+                AbsoluteLayout.LayoutBounds="400,5"/>
+    </AbsoluteLayout>
+</ContentPage>

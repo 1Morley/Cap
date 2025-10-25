@@ -4,7 +4,9 @@
              x:Class="Capstone.MainPage"
              xmlns:viewmodel="clr-namespace:Capstone.Controller"
              xmlns:models="clr-namespace:Capstone.Model"
+             xmlns:selector="clr-namespace:Capstone.Selectors"
              x:DataType="viewmodel:ProjectViewModel"
+             BackgroundColor="Transparent"
              >
     <ContentPage.Resources>
 
@@ -42,6 +44,16 @@
             <Setter Property="HeightRequest" Value="600"/>
             <Setter Property="MaximumWidthRequest" Value="300"/>
         </Style>
+
+        <DataTemplate x:Key="entryTemplate">
+            <Label Text="entry"/>
+        </DataTemplate>
+        <DataTemplate x:Key="fileTemplate">
+            <Label Text="file"/>
+        </DataTemplate>
+        <selector:EntryDataTemplateSelector x:Key="entryTemplateSelector"
+                                         EntryTemplate="{StaticResource entryTemplate}"
+                                         FileTemplate="{StaticResource fileTemplate}"/>
 
     </ContentPage.Resources>
 
@@ -138,7 +150,9 @@
                                 </HorizontalStackLayout>
 
                                 <Label Text="{Binding ProjectImage, StringFormat='Image: {0}'}"/>
-                                <CollectionView ItemsSource="{Binding EntryList}">
+                                <CollectionView ItemsSource="{Binding EntryList}"
+                                                ItemTemplate="{StaticResource entryTemplateSelector}">
+                                    <!--
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="models:NoteEntry">
                                             <Border Style="{StaticResource MiniBorder}">
@@ -159,36 +173,12 @@
                                                             CommandParameter="{Binding Id}"/>
 
                                                     <Label Text="{Binding EntryNotes, StringFormat='Notes: {0}'}"/>
-                                                   
-                                                </VerticalStackLayout>
-                                            </Border>
-                                        </DataTemplate>
-                                        <DataTemplate x:DataType="models:FileEntry">
-                                            <Border Style="{StaticResource MiniBorder}">
-                                                <VerticalStackLayout>
-                                                    <HorizontalStackLayout>
-                                                        <Label Style="{StaticResource Title}"
-                                                               Text="{Binding Title, StringFormat='Entry: {0}'}"/>
-
-                                                        <Label 
-                                                               Style="{StaticResource Title}"
-                                                               Text="{Binding Id, StringFormat='({0})'}"/>
-                                                    </HorizontalStackLayout>
-                                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
-                                                    <Label Text="{Binding DueDate, StringFormat='Due Date: {0:MMM dd, yyyy}'}"/>
-
-                                                    <Button Text="Delete Entry"
-                                                            Clicked="Delete_Entry_Click"
-                                                            CommandParameter="{Binding Id}"/>
-
-                                                    <Label Text="{Binding EntryNotes, StringFormat='Notes: {0}'}"/>
-                                                    <Label Text="{Binding Path, StringFormat='FilePath: {0}'}"/>
-                                                    <Label Text="{Binding IsValidPath, StringFormat='Valid Path: {0}'}"/>
 
                                                 </VerticalStackLayout>
                                             </Border>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
+                                    -->
                                 </CollectionView>
 
                                 <Button Text="Add Entry"

@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Capstone.View
+namespace Capstone.Selectors
 {
     public class EntryDataTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate NoteEntryTemplate { get; set; }
-        public DataTemplate FileEntryTemplate { get; set; }
+        public DataTemplate EntryTemplate { get; set; }
+        public DataTemplate FileTemplate { get; set; }
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if(item is FileEntry)
+            NoteEntry noteEntry = (NoteEntry)item;
+            if (noteEntry is FileEntry)
             {
-                return FileEntryTemplate;
+                return FileTemplate;
             }
-            return NoteEntryTemplate;
+            return EntryTemplate;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Capstone.Controller;
+using Capstone.View;
 
 namespace Capstone
 {
@@ -64,7 +65,7 @@ namespace Capstone
 
         private void Test_Page_Click(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new TestPage());
+            Navigation.PushAsync(new TestPageUI());
         }
 
         private void Swap_Project_Index(object sender, EventArgs e) 

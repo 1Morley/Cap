@@ -120,7 +120,7 @@ namespace Capstone.Model
         {
             if (CheckValues(out warningMessage))
             {
-                if(EntryType == "FILE")
+                if (EntryType == "FILE")
                 {
                     newEntry = new FileEntry(entryId, Title, Status, DueDate, EntryNotes,EntryContent);
                 }
