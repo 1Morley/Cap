@@ -21,7 +21,7 @@ namespace Capstone.Controller
             //ProjectList.OrderBy(x => x.Id);
             return ProjectList.First(x => x.Id == id);
         }
-
+        //
         public void AddProject(Project input)
         {
             if (input != null)
@@ -45,7 +45,7 @@ namespace Capstone.Controller
             }
             return id;
         }
-
+        //
         public void DeleteEntry(int projectId, int entryId)
         {
             FindProjectById(projectId).DeleteEntry(entryId);
@@ -58,6 +58,7 @@ namespace Capstone.Controller
                 ProjectList.Remove(found);
             }
         }
+        //
         public void MoveProjectToNewIndex(int projectId, int newIndex)
         {
             if(ProjectList.Count != 0) 
@@ -77,7 +78,7 @@ namespace Capstone.Controller
             }
 
         }
-
+        //
         public void AddEntryToProjectById(int projectId, NoteEntry inputEntry)
         {
             Project found = FindProjectById(projectId);

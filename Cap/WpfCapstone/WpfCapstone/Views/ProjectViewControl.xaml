@@ -3,32 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfCapstone.Views"
+             xmlns:views="clr-namespace:WpfCapstone.Views"
+             xmlns:convert="clr-namespace:WpfCapstone.Models.ViewConverter"
              xmlns:viewmodels="clr-namespace:WpfCapstone.ViewModels"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <viewmodels:ProjectListViewModel/>
-    </UserControl.DataContext>
-    <StackPanel Background="AliceBlue">
-        <ItemsControl ItemsSource="{Binding ProjectList}">
+             mc:Ignorable="d">
+
+
+    <Grid Background="CadetBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="+" 
+                Grid.Column="0"
+                VerticalAlignment="Top"
+                MinWidth="30"
+                MinHeight="30"
+                Command="{Binding SetFocusCreate}"/>
+        <ItemsControl Grid.Column="1"
+                  ItemsSource="{Binding ProjectListVM.ProjectList}"
+>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="{Binding Title}"/>
-                        <TextBlock Text=" ("/>
-                        <TextBlock Text="{Binding Id}"/>
-                        <TextBlock Text=")"/>
-                        <Label Content="Image:"/>
-                        <TextBlock Text="{Binding CoverImage}"/>
-
-                        <Button Content="Delete"
-                                Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                CommandParameter="{Binding Id}" />
-
-                    </WrapPanel>
+                    <Grid>
+                        <StackPanel Margin="5">
+                            <Rectangle Width="60" Height="60" Fill="DeepPink"/>
+                            <Label Content="{Binding Title}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Background="#2fff"
+                                Command="{Binding DataContext.ClickSelectProject, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding Id}"/>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </StackPanel>
+        <Button Content="-" 
+                Grid.Column="2"
+                VerticalAlignment="Top"
+                MinWidth="30"
+                MinHeight="30" 
+                Command="{Binding SetProjectDelete}"/>
+    </Grid>
+
 </UserControl>

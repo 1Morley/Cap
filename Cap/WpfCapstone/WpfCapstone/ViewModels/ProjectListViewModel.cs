@@ -9,86 +9,48 @@ using WpfCapstone.Models;
 
 namespace WpfCapstone.ViewModels
 {
-    internal class ProjectListViewModel
+    public class ProjectListViewModel
     {
-        public ObservableCollection<ProjectModel> ProjectList { get; set; }
-        public InputProjectModel InputProject { get; set; }
-        public RelayCommand AddProjectCommand { get; private set; }
-        public RelayCommand DeleteProjectCommand { get; private set; }
+        public ObservableCollection<ProjectModel> ProjectList { get; private set; }
+        public InputProjectModel InputProject { get; private set; }
 
 
         public ProjectListViewModel()
         {
             ProjectList = new ObservableCollection<ProjectModel>();
-            
             InputProject = new InputProjectModel();
 
-            AddProjectCommand = new RelayCommand(input => AddProject());
-
-            DeleteProjectCommand = new RelayCommand(input =>
-            {
-                if(int.TryParse(input.ToString(), out int inputId)) 
-                {
-                    DeleteProject(inputId);
-                }
-            });
+            AddTestProjects();
+            FileController thing = new FileController();
+            var output = thing.LoadFile();
+            ObservableCollection<ProjectModel> test = output.Result;
         }
 
-        private void AddProject() {
-            ProjectList.Add(InputProject.Duplicate(getNextProjectId()));
-        }
-
-        private bool DeleteProject(int inputId) 
+        private void AddTestProjects()//TODO REMOVE 
         {
-            ProjectModel found = FindProjectById(inputId);
-            if (found != null)
-            {
-                return ProjectList.Remove(found);
-            }
-            return false;
+            AddProject();
+            AddProject();
+            AddProject();
         }
 
-        private int getNextProjectId()
+        public ProjectModel AddProject() {
+            return ListController<ProjectModel>.AddModel(ProjectList, InputProject);
+        }
+
+        public void DeleteProject(int inputId) 
         {
-            int id;
-            if (ProjectList.Count == 0)
-            {
-                id = 1;
-            }
-            else
-            {
-                id = ProjectList.Max(x => x.Id) + 1;
-            }
-            return id;
+            ListController<ProjectModel>.DeleteModel(ProjectList, inputId);
         }
 
-        private ProjectModel FindProjectById(int id)
+        public void MoveProjectToNewIndex(int projectId, int newIndex)
         {
-            //ProjectList.OrderBy(x => x.Id);
-            return ProjectList.FirstOrDefault(x => x.Id == id);
+            ListController<ProjectModel>.MoveModelToNewIndex(ProjectList, projectId,newIndex);
         }
 
-        private void MoveProjectToNewIndex(int projectId, int newIndex)
-        {
-            if (ProjectList.Count != 0)
-            {
-                if (newIndex < 0)
-                {
-                    newIndex = 0;
-                }
-                else if (newIndex >= ProjectList.Count)
-                {
-                    newIndex = ProjectList.Count - 1;
-                }
-                ProjectModel found = FindProjectById(projectId);
-
-                if (DeleteProject(projectId))
-                {
-                    ProjectList.Insert(newIndex, found);
-                }
-
-            }
-
+        public ProjectModel GetProject(int inputId) 
+        { 
+            return ListController<ProjectModel>.FindModelById(ProjectList, inputId);
         }
+
     }
 }

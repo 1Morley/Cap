@@ -9,7 +9,7 @@ namespace WpfCapstone.Models
     public class InputProjectModel: ProjectModel, IDuplicate<ProjectModel>
     {
 
-        public InputProjectModel() : base(0, DEFAULT_PROJECT_TITLE, DEFAULT_COVER_IMAGE) { }
+        public InputProjectModel() : base(0, DEFAULT_PROJECT_TITLE, DEFAULT_COVER_IMAGE, null) { }
 
         public void ResetValues()
         {

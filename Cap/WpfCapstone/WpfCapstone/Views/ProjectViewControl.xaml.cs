@@ -24,5 +24,6 @@ namespace WpfCapstone.Views
         {
             InitializeComponent();
         }
+
     }
 }
