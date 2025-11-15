@@ -1,0 +1,23 @@
+﻿<Application x:Class="WPFCap.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFCap"
+             StartupUri="Views/MainWindow.xaml"
+>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Views/Styles/StyleVariables.xaml"/>
+                
+                
+                <ResourceDictionary Source="/Views/Styles/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/RectangleStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/BorderStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/LabelStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/DataTemplateStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

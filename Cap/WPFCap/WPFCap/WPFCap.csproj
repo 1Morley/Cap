@@ -1,0 +1,122 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DefaultImages\CoverImages\AxPix.png" />
+    <None Remove="DefaultImages\CoverImages\BallPic.png" />
+    <None Remove="DefaultImages\CoverImages\BugPic.png" />
+    <None Remove="DefaultImages\CoverImages\ClownPic.png" />
+    <None Remove="DefaultImages\CoverImages\CreaturePic.png" />
+    <None Remove="DefaultImages\CoverImages\DissyPic.png" />
+    <None Remove="DefaultImages\CoverImages\DUCKPic.png" />
+    <None Remove="DefaultImages\CoverImages\EyePic.png" />
+    <None Remove="DefaultImages\CoverImages\FishPic.png" />
+    <None Remove="DefaultImages\CoverImages\FloatPic.png" />
+    <None Remove="DefaultImages\CoverImages\foolPic.png" />
+    <None Remove="DefaultImages\CoverImages\frogPic.png" />
+    <None Remove="DefaultImages\CoverImages\GhostPic.png" />
+    <None Remove="DefaultImages\CoverImages\KnifePic.png" />
+    <None Remove="DefaultImages\CoverImages\MikuPic.png" />
+    <None Remove="DefaultImages\CoverImages\OwPic.png" />
+    <None Remove="DefaultImages\CoverImages\PlantPic.png" />
+    <None Remove="DefaultImages\CoverImages\RabbitPic.png" />
+    <None Remove="DefaultImages\CoverImages\ScribePic.png" />
+    <None Remove="DefaultImages\CoverImages\StampPic.png" />
+    <None Remove="DefaultImages\CoverImages\TallPic.png" />
+    <None Remove="DefaultImages\CoverImages\ThingPic.png" />
+    <None Remove="DefaultImages\DefaultMissingImage.png" />
+    <None Remove="DefaultImages\DefaultTest.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DefaultImages\CoverImages\AxPix.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\BallPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\BugPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\ClownPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\CreaturePic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\DissyPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\DUCKPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\EyePic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\FishPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\FloatPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\foolPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\frogPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\GhostPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\KnifePic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\MikuPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\OwPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\PlantPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\RabbitPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\ScribePic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\StampPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\TallPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\CoverImages\ThingPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DefaultImages\DefaultMissingImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultImages\DefaultTest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
+    <PackageReference Include="Google.Apis.Core" Version="1.72.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.72.0.3944" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    >
+
+    <SolidColorBrush x:Key="MainBackgroundColor" Color="#FF2834A3"/>
+    <SolidColorBrush x:Key="MainBorderColor" Color="#FF2A2259"/>
+
+
+    <Thickness x:Key="BorderThickness">5</Thickness>
+    <CornerRadius x:Key="BorderCornerCurve">10</CornerRadius>
+
+
+    <Thickness x:Key="WindowBorderThickness">10</Thickness>
+    <Thickness x:Key="WindowPadding">15</Thickness>
+    <CornerRadius x:Key="WindowCornerCurve">10</CornerRadius>
+    
+    <SolidColorBrush x:Key="TitleTextColor" Color="#FFF48631"/>
+    <Thickness x:Key="TitleMargin">0,0,0,10</Thickness>
+    <sys:Double x:Key="TitleFontSize">30</sys:Double>
+    
+
+    
+    <CornerRadius x:Key="InputCornerCurve">20</CornerRadius>
+    <Thickness x:Key="InputPadding">5</Thickness>
+    <FontWeight x:Key="InputBoldWeight">SemiBold</FontWeight>
+
+    <SolidColorBrush x:Key="InputTextColor" Color="#FF1D2696"/>
+    <SolidColorBrush x:Key="InputBackgroundColor" Color="#FFBCC6E6"/>
+    <SolidColorBrush x:Key="InputBorderColor" Color="#FF3051D9"/>
+
+    <SolidColorBrush x:Key="FocusInputTextColor" Color="#961D60"/>
+    <SolidColorBrush x:Key="FocusInputBackgroundColor" Color="#E6BCD2"/>
+    <SolidColorBrush x:Key="FocusInputBorderColor" Color="#D9307F"/>
+
+    <CornerRadius x:Key="ButtonCornerCurve">20</CornerRadius>
+    <Thickness x:Key="ButtonPadding">10</Thickness>
+    <FontWeight x:Key="ButtonBoldWeight">SemiBold</FontWeight>
+
+    <SolidColorBrush x:Key="ButtonTextColor" Color="#FF96551D"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FFE6D7BC"/>
+    <SolidColorBrush x:Key="ButtonBorderColor" Color="#FFD98E30"/>
+
+    <SolidColorBrush x:Key="FocusButtonTextColor" Color="#FF811D96"/>
+    <SolidColorBrush x:Key="FocusButtonBackgroundColor" Color="#FFE6BCE4"/>
+    <SolidColorBrush x:Key="FocusButtonBorderColor" Color="#FFC630D9"/>
+
+    <Thickness x:Key="WindowFunctionMargin">0,20,20,0</Thickness>
+
+
+    <Thickness x:Key="ElementBorderThickness">3.5</Thickness>
+    <sys:Double x:Key="ElementFontSize">12</sys:Double>
+
+
+
+
+</ResourceDictionary>

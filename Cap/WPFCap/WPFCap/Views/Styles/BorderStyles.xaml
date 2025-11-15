@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="Border">
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+
+        <Setter Property="BorderThickness" Value="{DynamicResource BorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource BorderCornerCurve}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+    </Style>
+    
+    <Style TargetType="Border" x:Key="WindowBorder" BasedOn="{StaticResource {x:Type Border}}">
+        <Setter Property="BorderThickness" Value="{DynamicResource WindowBorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource WindowCornerCurve}"/>
+        <Setter Property="Background" Value="{DynamicResource MainBackgroundColor}"/>
+        <Setter Property="Padding" Value="{DynamicResource WindowPadding}"/>
+    </Style>
+</ResourceDictionary>
