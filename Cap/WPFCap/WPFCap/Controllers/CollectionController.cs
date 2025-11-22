@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WPFCap.Models.Interfaces;
 
@@ -17,9 +18,16 @@ namespace WPFCap.Controllers
             ModelList = modelList;
         }
 
-        public bool IsRepeatTitle(out string updateName)
+        public bool IsRepeatTitle(string inputName, out string updateName)
         {
-            updateName = "why would you do this";
+            string regex = ".+\\(\\d+\\)";
+            Match match = Regex.Match(inputName, regex);
+            string ending = "(hehe)";
+            if (match.Success)
+            {
+                ending = "(youuuu >:( )";
+            }
+            updateName = $"{inputName} {ending}";
             return false;
         }
 
@@ -27,6 +35,10 @@ namespace WPFCap.Controllers
         {
             int newId = GetNextModelId();
             T createdModel = inputModel.Duplicate(newId);
+            if(IsRepeatTitle(createdModel.Title, out string newTitle))
+            {
+                createdModel.SetTitle(newTitle);
+            }
             ModelList.Add(createdModel);
             return createdModel;
         }

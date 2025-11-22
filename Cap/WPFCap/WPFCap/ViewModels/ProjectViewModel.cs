@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using WPFCap.Controllers;
 using WPFCap.Models;
 using WPFCap.Models.Enums;
 using WPFCap.Models.InputModels;
@@ -35,10 +37,18 @@ namespace WPFCap.ViewModels
         public RelayCommand DeleteEntryCommand { get; private set; }
 
         public RelayCommand UpdateEntryFileType {  get; private set; }
+        public RelayCommand SetInputEntryFile {  get; private set; }
+
+        public RelayCommand SetGoogleFile { get; private set; }
+
+        private WindowController windowCon;
+        public Collection<GoogleFile> GoogleList { get; private set; }
 
         public ProjectViewModel()
         {
+            GoogleList = GoogleController.Instance.ListFiles();
             InputEntry = new InputEntryModel();
+            windowCon = WindowController.Instance;
             CreateCommands();
         }
 
@@ -52,13 +62,21 @@ namespace WPFCap.ViewModels
                     DeleteEntry(inputId);
                 }
             });
-            UpdateEntryFileType = new RelayCommand(x =>
+            SetInputEntryFile = new RelayCommand(x =>
             {
-                if (RelayCommand.ParseResultEntryFileType(x, out EntryFileTypes inputId))
+                if(FileController.InputLocalFile(out string fileName))
                 {
-                    InputEntry.SelectedEntryType = inputId;
+                    InputEntry.EntryLocalFile = fileName;
                 }
             });
+            SetGoogleFile = new RelayCommand(x =>
+            {
+                if(x is GoogleFile file)
+                {
+                    InputEntry.EntryGoogleFile = file;
+                }
+            });
+
         }
 
         private void AddEntry()
@@ -79,7 +97,22 @@ namespace WPFCap.ViewModels
 
         public void SetSelectProject(ProjectModel project)
         {
-            SelectedProject = project;
+            if (SelectedProject != null)
+            {
+                windowCon.ProjectSelected = true;
+                SelectedProject = project;
+            }
+            else
+            {
+                SetSelectProjectNull();
+            }
+        }
+
+        public void SetSelectProjectNull()
+        {
+            ImageModel defaultImage = FileController.GetEmptyImage();
+            SelectedProject = new ProjectModel(0,"Empty Project", defaultImage);
+            windowCon.ProjectSelected = false;
         }
 
         private void UpdateShownEntryList()

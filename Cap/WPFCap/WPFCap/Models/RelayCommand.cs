@@ -43,18 +43,5 @@ namespace WPFCap.Models
             parsedInput = -1;
             return false;
         }
-        public static bool ParseResultEntryFileType(object input, out EntryFileTypes parsedInput)
-        {
-            if (input != null)
-            {
-                if(input.GetType() == typeof(EntryFileTypes))
-                {
-                    parsedInput = (EntryFileTypes)input;
-                    return true;
-                }
-            }
-            parsedInput = EntryFileTypes.NORMAL;
-            return false;
-        }
     }
 }

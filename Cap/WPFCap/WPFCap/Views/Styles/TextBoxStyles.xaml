@@ -11,7 +11,7 @@
         <Setter Property="Padding" Value="{DynamicResource InputPadding}"/>
 
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontWeight" Value="{DynamicResource InputBoldWeight}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource ElementBoldWeight}"/>
         <Setter Property="Foreground" Value="{DynamicResource InputTextColor}"/>
 
         <Setter Property="MaxWidth" Value="400"/>

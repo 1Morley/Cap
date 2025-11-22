@@ -10,42 +10,10 @@ using WPFCap.Controllers;
 
 namespace WPFCap.Models
 {
-    class FileStrategy:IOpenStrategy
+    class FileStrategy:LinkStrategy
     {
-        private string _filePath;
-        public string FilePath
-        {
-            get
-            {
-                return _filePath;
-            }
-            set
-            {
-                if (InputValidator.ValidFile(value))
-                {
-                    _filePath = value;
-                    UpdateProcess();
-                }
-            }
-        }
-        private Process PreparedProcess { get; set; }
         public FileStrategy(string filePath)
-        {
-            PreparedProcess = new Process();
-            FilePath = filePath;
-        }
-        public void Open()
-        {
-            PreparedProcess.Start();
-        }
+            : base(filePath){}
 
-        private void UpdateProcess()
-        {
-            PreparedProcess.StartInfo = new ProcessStartInfo()
-            {
-                UseShellExecute = true,
-                FileName = FilePath
-            };
-        }
     }
 }

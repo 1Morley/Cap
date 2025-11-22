@@ -32,8 +32,8 @@ namespace WPFCap.Models
             }
         }
 
-        private ImageSource _coverImage;
-        public ImageSource CoverImage
+        private ImageModel _coverImage;
+        public ImageModel CoverImage
         {
             get
             {
@@ -49,21 +49,16 @@ namespace WPFCap.Models
         public CollectionController<EntryModel> EntryList { get; private set; }
 
         public ProjectModel() { }
-
-        public ProjectModel(int id, string title, ImageSource cover)
+        public ProjectModel(int id, string title, ImageModel cover)
+            : this(id,title,cover,new CollectionController<EntryModel>(new ObservableCollection<EntryModel>())) {}
+        public ProjectModel(int id, string title, ImageModel cover, CollectionController<EntryModel> entryModels)
         {
             Id = id;
             Title = title;
             CoverImage = cover;
-            EntryList = new CollectionController<EntryModel>(new ObservableCollection<EntryModel>());
+            EntryList = entryModels;
 
             InputEntryModel inputEntry = new InputEntryModel();
-            EntryList.AddModel(inputEntry);
-            inputEntry.Title = "egggg";
-            EntryList.AddModel(inputEntry);
-            inputEntry.Title = "Test";
-            EntryList.AddModel(inputEntry);
-            EntryList.AddModel(inputEntry);
         }
         public void SetTitle(string title)
         {

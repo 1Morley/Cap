@@ -7,16 +7,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
                 <ResourceDictionary Source="/Views/Styles/StyleVariables.xaml"/>
-                
                 
                 <ResourceDictionary Source="/Views/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Views/Styles/RectangleStyles.xaml"/>
                 <ResourceDictionary Source="/Views/Styles/BorderStyles.xaml"/>
                 <ResourceDictionary Source="/Views/Styles/LabelStyles.xaml"/>
                 <ResourceDictionary Source="/Views/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="/Views/Styles/DataTemplateStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/DataTemplateSelectorDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

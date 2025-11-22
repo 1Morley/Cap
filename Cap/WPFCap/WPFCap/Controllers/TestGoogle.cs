@@ -5,6 +5,8 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -33,7 +35,6 @@ namespace WPFCap.Controllers
                 HttpClientInitializer = cred,
                 ApplicationName = ApplicationName
             });
-            listFiles();
         }
 
         private UserCredential GetCred()
@@ -53,16 +54,34 @@ namespace WPFCap.Controllers
 
         }
 
-        private void listFiles()
+        public void listFiles()
         {
             var request = service.Files.List();
-            request.Fields = "nextPageToken, files(id, name)";
+            request.Fields = "nextPageToken, files(Id, name, WebViewLink)";
             var result = request.Execute();
 
             foreach (var file in result.Files)
             {
                 Console.WriteLine($"File ID: {file.Id}, File Name: {file.Name}");
+                if (file.Name == "thing")
+                {
+                    OpenFile(file);
+                    
+                }
             }
+        }
+
+        public void OpenFile(Google.Apis.Drive.v3.Data.File file)
+        {
+            if (!string.IsNullOrEmpty(file.WebViewLink))
+            {
+                Process.Start(new ProcessStartInfo(file.WebViewLink) { UseShellExecute = true });
+            }
+            else
+            {
+                Console.WriteLine("FUCK");
+            }
+
         }
     }
 }

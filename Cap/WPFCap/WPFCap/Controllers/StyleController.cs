@@ -12,20 +12,20 @@ namespace WPFCap.Controllers
     {
         private ResourceDictionary styleVariables;
 
-        private const string MainBackgroundColorKey = "MainBackgroundColor";
-        private const string SecondaryBackgroundColorKey = "SecondaryBackgroundColor";
-        private const string MainTextColorKey = "MainTextColor";
-        private const string BorderColorKey = "BorderColor";
         public StyleController() 
         {
             styleVariables = Application.Current.Resources.MergedDictionaries[0];
         }
         public void UpdateColor()
         {
-            ResourceDictionary colorDictionary = Application.Current.Resources.MergedDictionaries[0];
-            if (colorDictionary["PrimaryBrush"] is SolidColorBrush)
+            ResourceDictionary styleDictionary = Application.Current.Resources.MergedDictionaries[0];
+            if (styleDictionary["WindowBorderColor"] is SolidColorBrush)
             {                
-                colorDictionary["PrimaryBrush"] = new SolidColorBrush(Colors.Red);
+                styleDictionary["WindowBorderColor"] = new SolidColorBrush(Colors.Yellow);
+            }
+            if (styleDictionary["WindowBackgroundColor"] is SolidColorBrush)
+            {                
+                styleDictionary["WindowBackgroundColor"] = new SolidColorBrush(Colors.CadetBlue);
             }
         }
 

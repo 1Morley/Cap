@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border Style="{StaticResource WindowBorder}">
+        <Border Style="{StaticResource WindowThing}">
             <StackPanel>
             <control:EntrySelectControl 
                 DataContext="{Binding}"/>

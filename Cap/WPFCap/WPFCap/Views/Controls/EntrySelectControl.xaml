@@ -2,18 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:models="clr-namespace:WPFCap.Models"
-             xmlns:dataselect="clr-namespace:WPFCap.Views.DataTemplateControls">
-    <UserControl.Resources>
-        <dataselect:ListEntryTypeSelect x:Key="EntryTypeSelector"
-                                        NormalEntryTemplate="{StaticResource ListNormalEntryTemplate}"
-                                        LocalFileTemplate="{StaticResource ListLocalFileEntryTemplate}"/>
-    </UserControl.Resources>
-
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" >
 
     <StackPanel>
-        <TextBlock Text="{Binding SelectedProject.Title}"/>
+        <Label Content="{Binding SelectedProject.Title}"
+               Style="{StaticResource Title}"/>
         <ItemsControl ItemsSource="{Binding ShownEntryList}"
                       ItemTemplateSelector="{StaticResource EntryTypeSelector}">
             <ItemsControl.ItemsPanel>

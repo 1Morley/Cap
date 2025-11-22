@@ -16,7 +16,7 @@
             <Button HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
                 <Button.Background>
-                    <ImageBrush ImageSource="{Binding SelectedItem}"/>
+                    <ImageBrush ImageSource="{Binding SelectedItem.Image}"/>
                 </Button.Background>
             </Button>
         </Grid>
@@ -38,7 +38,7 @@
                                       RelativeSource={RelativeSource AncestorType=UserControl}}">
 
                         <Button.Background>
-                            <ImageBrush ImageSource="{Binding}"/>
+                            <ImageBrush ImageSource="{Binding Image}"/>
                         </Button.Background>
                     </Button>
                 </DataTemplate>

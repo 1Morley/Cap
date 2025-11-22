@@ -9,7 +9,7 @@ namespace WPFCap.Controllers
 {
     public class PageListController<T>
     {
-        public Collection<T> FullList { get; private set; }
+        public Collection<T> FullList { get; set; }
 
         public ObservableCollection<T> ShownList { get; private set; }
 

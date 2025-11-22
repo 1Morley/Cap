@@ -2,17 +2,34 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="Border">
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-
-        <Setter Property="BorderThickness" Value="{DynamicResource BorderThickness}"/>
-        <Setter Property="CornerRadius" Value="{DynamicResource BorderCornerCurve}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource DefaultThickness}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DefaultBorderColor}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource DefaultCorner}"/>
+        <Setter Property="Padding" Value="{DynamicResource DefaultPadding}"/>
     </Style>
-    
-    <Style TargetType="Border" x:Key="WindowBorder" BasedOn="{StaticResource {x:Type Border}}">
+
+    <Style TargetType="Border" x:Key="WindowThing" BasedOn="{StaticResource {x:Type Border}}">
         <Setter Property="BorderThickness" Value="{DynamicResource WindowBorderThickness}"/>
-        <Setter Property="CornerRadius" Value="{DynamicResource WindowCornerCurve}"/>
-        <Setter Property="Background" Value="{DynamicResource MainBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderColor}"/>
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource WindowCorner}"/>
         <Setter Property="Padding" Value="{DynamicResource WindowPadding}"/>
     </Style>
+
+    <Style TargetType="Border" x:Key="SubWindow" BasedOn="{StaticResource {x:Type Border}}">
+        <Setter Property="BorderThickness" Value="{DynamicResource SubWindowBorderThickness}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SubWindowBorderColor}"/>
+        <Setter Property="Background" Value="{DynamicResource SubWindowBackgroundColor}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource SubWindowCorner}"/>
+        <Setter Property="Padding" Value="{DynamicResource SubWindowPadding}"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="Option" BasedOn="{StaticResource {x:Type Border}}">
+        <Setter Property="BorderThickness" Value="{DynamicResource OptionBorderThickness}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource OptionBorderColor}"/>
+        <Setter Property="Background" Value="{DynamicResource OptionBackgroundColor}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource OptionCorner}"/>
+        <Setter Property="Padding" Value="{DynamicResource OptionPadding}"/>
+    </Style>
+
 </ResourceDictionary>

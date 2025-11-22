@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -117,6 +117,10 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.72.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.72.0.3944" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Converter\" />
   </ItemGroup>
 
 </Project>

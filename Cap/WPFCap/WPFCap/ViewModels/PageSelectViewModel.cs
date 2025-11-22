@@ -12,7 +12,7 @@ using WPFCap.Models;
 
 namespace WPFCap.ViewModels
 {
-    public abstract class PageSelectViewModel<T> : INotifyPropertyChanged
+    public class PageSelectViewModel<T> : INotifyPropertyChanged
     {
         private T _selectedItem;
         public T SelectedItem
@@ -37,7 +37,7 @@ namespace WPFCap.ViewModels
         private PageListController<T> PageController { get; set; }
         public RelayCommand NextPageCommand { get; private set; }
         public RelayCommand PrevPageCommand { get; private set; }
-        public RelayCommand SelectItemCommand { get; protected set; }
+        public RelayCommand SelectItemCommand { get; set; }
         public Visibility NextActive 
         {
             get
@@ -105,6 +105,11 @@ namespace WPFCap.ViewModels
             return PageController.GetSelectedItem(index);
         }
 
+        public void SetFullList(Collection<T> NewFullList)
+        {
+            PageController.FullList = NewFullList;
+            UpdateShownList();
+        }
         public void UpdateShownList()
         {
             PageController.UpdateShownList();

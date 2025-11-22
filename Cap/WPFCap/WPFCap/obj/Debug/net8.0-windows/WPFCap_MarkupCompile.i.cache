@@ -1,7 +1,7 @@
 ﻿WPFCap
 1.0.0.0
 
-winexe
+exe
 C#
 .cs
 C:\Users\Bug\OneDrive\Documents\year3Q1\capstone\Cap\Cap\WPFCap\WPFCap\obj\Debug\net8.0-windows\
@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Users\Bug\OneDrive\Documents\year3Q1\capstone\Cap\Cap\WPFCap\WPFCap\App.xaml
-19-473758858
+22-864840456
 242088075369
-39523693667
+52-1203771401
 2041373409178
-Views\Controls\DefaultProjectControl.xaml;Views\Controls\EntryCreateControl.xaml;Views\Controls\EntrySelectControl.xaml;Views\Controls\ProjectCreateControl.xaml;Views\Controls\ProjectSelectControl.xaml;Views\EntryListWindow.xaml;Views\FocusWindow.xaml;Views\MainWindow.xaml;Views\MiniControls\PageSwitchControl.xaml;Views\MiniControls\PictureSelectControl.xaml;Views\ProjectWindow.xaml;Views\SelectEntryWindow.xaml;Views\Styles\BorderStyles.xaml;Views\Styles\ButtonStyles.xaml;Views\Styles\DataTemplateStyles.xaml;Views\Styles\LabelStyles.xaml;Views\Styles\RectangleStyles.xaml;Views\Styles\StyleVariables.xaml;Views\Styles\TextBoxStyles.xaml;
+Views\Controls\DefaultProjectControl.xaml;Views\Controls\EntryCreateControl.xaml;Views\Controls\EntrySelectControl.xaml;Views\Controls\ProjectCreateControl.xaml;Views\Controls\ProjectSelectControl.xaml;Views\EntryListWindow.xaml;Views\FocusWindow.xaml;Views\MainWindow.xaml;Views\MiniControls\PageSwitchControl.xaml;Views\MiniControls\PictureSelectControl.xaml;Views\ProjectWindow.xaml;Views\SelectEntryWindow.xaml;Views\Styles\BorderStyles.xaml;Views\Styles\ButtonStyles.xaml;Views\Styles\DataTemplateSelectorDictionary.xaml;Views\Styles\DataTemplateStyles.xaml;Views\Styles\LabelStyles.xaml;Views\Styles\RectangleStyles.xaml;Views\Styles\StyleVariables.xaml;Views\Styles\TextBlockStyles.xaml;Views\Styles\TextBoxStyles.xaml;Views\ToolBarWindow.xaml;
 
 False
 

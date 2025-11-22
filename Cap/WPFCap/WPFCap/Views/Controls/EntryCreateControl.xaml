@@ -10,21 +10,49 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <StackPanel>
-            <Label Content="CREATE ENTRY"/>
-            <StackPanel DataContext="{Binding InputEntry}">
-                <TextBox Text="{Binding Title}"/>
-                <TextBox Text="{Binding EntryNotes}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Label Content="CREATE ENTRY" Style="{StaticResource Title}"/>
+                <StackPanel DataContext="{Binding InputEntry}">
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBox Text="{Binding EntryNotes}"/>
+                    <Label Content="Link:" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding EntryLink}"/>
+                    <Label Content="Local File:" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding EntryLocalFile}"/>
+                    <Label Content="Google File:" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding EntryGoogleFile.FileName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Add Local File"
+                        Command="{Binding SetInputEntryFile}"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Normal"
-                        Command="{Binding UpdateEntryFileType}"
-                        CommandParameter="{x:Static enum:EntryFileTypes.NORMAL}"/>
-                <Button Content="Local File"
-                        Command="{Binding UpdateEntryFileType}"
-                        CommandParameter="{x:Static enum:EntryFileTypes.LOCAL_FILE}"/>
-            </StackPanel>
-        </StackPanel>
+
+            <ScrollViewer Height="450" Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding GoogleList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding FileName}"
+                                    Command="{Binding DataContext.SetGoogleFile, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+        </Grid>
+
         <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                 Command="{Binding AddEntryCommand}"
                 Content="Submit"/>

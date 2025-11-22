@@ -17,7 +17,6 @@
         <StackPanel Grid.Column="2">
             <Label Content="CREATE PROJECT"/>
             <TextBox Text="{Binding InputProject.Title}"/>
-            <TextBox Text="Style Select"/>
 
         </StackPanel>
         <Button  Grid.Column="2" 
@@ -25,6 +24,5 @@
                  VerticalAlignment="Bottom" 
                  Command="{Binding AddProjectCommand}"
                  Content="Submit"/>
-
     </Grid>
 </UserControl>

@@ -5,14 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:WPFCap.Views"
         xmlns:viewmodel="clr-namespace:WPFCap.ViewModels"
-        PreviewMouseDown="Window_PreviewMouseDown">
+        xmlns:control="clr-namespace:WPFCap.Controllers"
+        PreviewMouseDown="Window_PreviewMouseDown"
+        
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowState="Maximized"
+        Topmost="False"
+        Background="Transparent"
+        BorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
+        >
+    
+    <!--Background="#33FC5AAB"-->
+
     <Window.DataContext>
         <viewmodel:ProjectListViewModel/>
     </Window.DataContext>
-    
-    <Grid>
-        <Button Content="egg" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
+
+    <Canvas x:Name="MainCanvas" 
+            AllowDrop="True"
+            DragOver="MainCanvas_DragOver"
+            Drop="MainCanvas_Drop"
+            >
+        <views:ToolBarWindow Canvas.Right="0" Canvas.Top="380"/>
+
         <views:FocusWindow
+                Width="550"
+                DataContext="{Binding}"
+                Visibility="{Binding Source={StaticResource WindowController}, Path=FocusWindow}"
+                Canvas.Right="550" Canvas.Top="380"/>
+
+        <views:ProjectWindow
+            DataContext="{Binding}"
+            Canvas.Left="0"/>
+
+
+        <views:EntryListWindow
+            DataContext="{Binding ChosenProjectVM}"
+            Visibility="{Binding Source={StaticResource WindowController}, Path=EntrySelectWindow}"
+            Canvas.Top="400"/>
+
+        <StackPanel Canvas.Right="0" Canvas.Top="100">
+            <Button Content="SAVE"
+                    Command="{Binding UpdateSaveFile}"/>
+            <Button Content="LOAD"
+                    Command="{Binding LoadSaveFile}"/>
+            <Button Content="STYLE UDPATE"
+                    Command="{Binding StyleTest}"/>
+        </StackPanel>
+
+        <Rectangle x:Name="TestSquare" 
+                   Fill="Red"
+                   Width="200"
+                   Height="200"
+                   PreviewMouseMove="DragWindow_MouseMove"
+                   />
+        <Rectangle  
+                   Fill="Blue"
+                   Width="200"
+                   Height="200"
+                   Canvas.Left="500"
+                   PreviewMouseMove="DragWindow_MouseMove"
+                   />
+
+
+    </Canvas>
+    <!--<Grid>
+
+        --><!--<views:FocusWindow
             Width="550"
             DataContext="{Binding}"
             VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -21,10 +81,10 @@
 
         <views:EntryListWindow
             DataContext="{Binding ChosenProjectVM}"
-            VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            VerticalAlignment="Center" HorizontalAlignment="Left"/>-->
 
         <!--<views:SelectEntryWindow
             DataContext="{Binding ChosenProjectVM}"
-            VerticalAlignment="Center" HorizontalAlignment="Right"/>-->
-    </Grid>
+            VerticalAlignment="Center" HorizontalAlignment="Right"/>--><!--
+    </Grid>-->
 </Window>

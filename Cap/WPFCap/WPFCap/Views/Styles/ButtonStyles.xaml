@@ -2,17 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="Button">
 
-        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderColor}"/>
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColor}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ButtonTextColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ElementBorderColor}"/>
+        <Setter Property="Background" Value="{DynamicResource ElementBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ElementTextColor}"/>
         <Setter Property="BorderThickness" Value="{DynamicResource ElementBorderThickness}"/>
 
-        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}"/>
-        <Setter Property="FontWeight" Value="{DynamicResource ButtonBoldWeight}"/>
-        <Setter Property="FontSize" Value="{DynamicResource ElementFontSize}"/>
-
-
-
+        <Setter Property="Padding" Value="{DynamicResource ElementPadding}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource ElementBoldWeight}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -32,12 +28,23 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource FocusButtonBorderColor}"/>
-                <Setter Property="Background" Value="{DynamicResource FocusButtonBackgroundColor}"/>
-                <Setter Property="Foreground" Value="{DynamicResource FocusButtonTextColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource FocusElementBorderColor}"/>
+                <Setter Property="Background" Value="{DynamicResource FocusElementBackgroundColor}"/>
+                <Setter Property="Foreground" Value="{DynamicResource FocusElementTextColor}"/>
             </Trigger>
         </Style.Triggers>
 
+    </Style>
+
+    <Style TargetType="Button" x:Key="Overlay" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource FocusDeleteOverLayBackgroundColor}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Button" x:Key="EqualSides" BasedOn="{StaticResource {x:Type Button}}">
@@ -52,6 +59,48 @@
         <Setter Property="Content" Value="X"/>
     </Style>
 
+    <Style TargetType="Button" x:Key="DeleteButton" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderBrush" Value="{DynamicResource DeleteBorderColor}"/>
+        <Setter Property="Background" Value="{DynamicResource DeleteBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DeleteTextColor}"/>
 
-    
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource FocusDeleteBorderColor}"/>
+                <Setter Property="Background" Value="{DynamicResource FocusDeleteBackgroundColor}"/>
+                <Setter Property="Foreground" Value="{DynamicResource FocusDeleteTextColor}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Button" x:Key="DeleteOverlay" BasedOn="{StaticResource DeleteButton}">
+        <Setter Property="Background" Value="{DynamicResource DeleteOverLayBackgroundColor}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource FocusDeleteOverLayBackgroundColor}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Button" x:Key="Profile" BasedOn="{StaticResource EqualSides}">
+        <Setter Property="Height" Value="{StaticResource ProfileSize}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="{DynamicResource ProfileCornerCurve}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

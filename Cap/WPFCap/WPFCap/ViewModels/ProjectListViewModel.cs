@@ -18,14 +18,30 @@ namespace WPFCap.ViewModels
 {
     public class ProjectListViewModel: PageSelectViewModel<ProjectModel>
     {
-        public CollectionController<ProjectModel> ProjectList;
+
+        private CollectionController<ProjectModel> _projectList {  get; set; }
+        public CollectionController<ProjectModel> ProjectList
+        {
+            get { return _projectList; }
+            set
+            {
+                _projectList = value;
+                OnPropertyChanged(nameof(ProjectList));
+            }
+        }
         public ObservableCollection<ProjectModel> ShownProjectList { get; private set; }
+
         public ProjectViewModel ChosenProjectVM { get; }
         public InputProjectModel InputProject { get; }
         public SelectPictureViewModel SelectPictureVM { get; }
         public RelayCommand AddProjectCommand { get; private set; }
         public RelayCommand DeleteProjectCommand { get; private set; }
         public RelayCommand SwitchDeleteModeCommand { get; private set; }
+        public RelayCommand UpdateSaveFile { get; private set; }
+        public RelayCommand LoadSaveFile { get; private set; }
+        public RelayCommand StyleTest { get; private set; }
+
+        public WindowController windowCon;
 
         public Visibility DeleteAvailibility
         {
@@ -81,7 +97,9 @@ namespace WPFCap.ViewModels
 
             CreateCommands();
 
-            TestGoogle thing = new TestGoogle();
+            SetDefaultProject();
+
+            windowCon = WindowController.Instance;
         }
 
         private void CreateCommands()
@@ -103,6 +121,21 @@ namespace WPFCap.ViewModels
                     SetChosenProject();
                 }
             });
+            UpdateSaveFile = new RelayCommand(x =>
+            {
+                FileController.SaveFile(GetFullList());
+            });
+            LoadSaveFile = new RelayCommand(x =>
+            {
+                ObservableCollection <ProjectModel> loadedFile = FileController.LoadFile();
+                SetFullList(loadedFile);
+                ProjectList = new CollectionController<ProjectModel>(loadedFile);
+            });
+            StyleTest = new RelayCommand(x =>
+            {
+                StyleController thing = new StyleController();
+                thing.UpdateColor();
+            });
         }
 
         public void AddProject()
@@ -117,6 +150,10 @@ namespace WPFCap.ViewModels
         public void DeleteProject(int id)
         {
             ProjectList.DeleteModel(id);
+            if(ChosenProjectVM.SelectedProject.Id == id)
+            {
+                ChosenProjectVM.SetSelectProjectNull();
+            }
             DeleteMode = false;
             UpdateShownList();
         }
@@ -126,6 +163,23 @@ namespace WPFCap.ViewModels
             ChosenProjectVM.SetSelectProject(SelectedItem);
             OnPropertyChanged(nameof(ChosenProjectVM));
         }
+
+        private void SetDefaultProject()
+        {
+            CheckEmptyProjectList();
+        }
+
+
+        private void CheckEmptyProjectList()
+        {
+            if (ProjectList.ModelList.Count == 0)
+            {
+                ChosenProjectVM.SetSelectProjectNull();
+            }
+        }
+
+        
+        
        
     }
 }

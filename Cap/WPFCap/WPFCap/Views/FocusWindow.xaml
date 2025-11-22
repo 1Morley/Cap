@@ -3,18 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:control="clr-namespace:WPFCap.Views.Controls">
+             xmlns:control="clr-namespace:WPFCap.Views.Controls"
+             xmlns:select="clr-namespace:WPFCap.Views.DataTemplateControls"
+             xmlns:viewmodel="clr-namespace:WPFCap.ViewModels">
 
+    <UserControl.Resources>
+        <DataTemplate x:Key="CreateEntry">
+            <control:EntryCreateControl 
+                DataContext="{Binding DataContext.ChosenProjectVM, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="CreateProject">
+            <control:ProjectCreateControl 
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        </DataTemplate>
+
+        <select:FocusWindowSelect x:Key="FocusWindowSelector"
+                                  EntryCreateTemplate="{StaticResource CreateEntry}"
+                                  ProjectCreateTemplate="{StaticResource CreateProject}"/>
+    </UserControl.Resources>
+    
     <Grid>
-        <Border Style="{StaticResource WindowBorder}">
-            <StackPanel>
-            <control:ProjectCreateControl
-                DataContext="{Binding}"/>
-            <control:EntryCreateControl
-                DataContext="{Binding ChosenProjectVM}"/>
-            </StackPanel>
+        <Border Style="{StaticResource WindowThing}">
+            <ContentControl Content="{Binding Source={StaticResource WindowController}, Path=FocusMode}"
+                            ContentTemplateSelector="{StaticResource FocusWindowSelector}"/>
         </Border>
-        <Button Style="{StaticResource WindowFunctions}"/>
+
+        <Button Style="{StaticResource WindowFunctions}"
+                DataContext="{Binding Source={StaticResource WindowControlVM}}"
+                Command="{Binding CloseFocusWindow}"/>
     </Grid>
 
 </UserControl>

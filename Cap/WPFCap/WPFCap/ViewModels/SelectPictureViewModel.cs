@@ -14,13 +14,13 @@ using WPFCap.Models;
 
 namespace WPFCap.ViewModels
 {
-    public class SelectPictureViewModel: PageSelectViewModel<ImageSource>
+    public class SelectPictureViewModel: PageSelectViewModel<ImageModel>
     {
-        public ObservableCollection<ImageSource> ShownList { get; private set; }
+        public ObservableCollection<ImageModel> ShownList { get; private set; }
 
         public const int AmountOfItemsPerPage = 4;
         public SelectPictureViewModel() : 
-            base(ImageFileController.GetImageList("CoverImages"), new ObservableCollection<ImageSource>(), AmountOfItemsPerPage)
+            base(FileController.GetImageList("CoverImages"), new ObservableCollection<ImageModel>(), AmountOfItemsPerPage)
         {
             ShownList = GetShownList();
         }

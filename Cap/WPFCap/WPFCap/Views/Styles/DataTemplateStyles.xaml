@@ -1,61 +1,72 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controller="clr-namespace:WPFCap.Controllers"
+                    xmlns:control="clr-namespace:WPFCap.Views.Controls"
+                    xmlns:select="clr-namespace:WPFCap.Views.DataTemplateControls"
+                    xmlns:viewmodel="clr-namespace:WPFCap.ViewModels">
     <DataTemplate x:Key="ListNormalEntryTemplate">
-        <StackPanel>
-            <Label Content="NORMAL ENTRY" Style="{DynamicResource SmallLabel}"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding Title}" Style="{DynamicResource SmallLabel}"/>
+        <Border Style="{DynamicResource SubWindow}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Title}" Style="{DynamicResource SubTitle}"/>
 
-                <Button Content="x" 
+                    <Button Content="x" 
                                 Style="{DynamicResource EqualSides}"
                                 Command="{Binding DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 CommandParameter="{Binding Id}"/>
 
+                </StackPanel>
+                <TextBlock 
+                    Text="{Binding EntryNotes}"
+                    Style="{StaticResource Paragraph}"/>
             </StackPanel>
-            <TextBlock Text="{Binding EntryNotes}"/>
-        </StackPanel>
+        </Border>
     </DataTemplate>
     
     <DataTemplate x:Key="ListLocalFileEntryTemplate">
-        <StackPanel>
-            <Label Content="LOCAL FILE" Style="{DynamicResource SmallLabel}"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding Title}" Style="{DynamicResource SmallLabel}"/>
+        <Border Style="{DynamicResource SubWindow}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Title}" Style="{DynamicResource SubTitle}"/>
 
-                <Button Content="x" 
+                    <Button Content="x" 
                                 Style="{DynamicResource EqualSides}"
                                 Command="{Binding DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 CommandParameter="{Binding Id}"/>
-            </StackPanel>
-            <TextBlock Text="{Binding EntryNotes}"/>
-            <Button Content="Open"
+                </StackPanel>
+                <TextBlock 
+                    Text="{Binding EntryNotes}"
+                    Style="{StaticResource Paragraph}"/>                
+                <Button Content="Open"
                     Command="{Binding OpenCommand}"/>
-        </StackPanel>
+            </StackPanel>
+        </Border>
     </DataTemplate>
 
 
     <DataTemplate x:Key="ListProjectModelTemplate">
         <Grid  Margin="5">
             <StackPanel Margin="5,10">
-                <Rectangle Height="80" Width="80"
-                                       Margin="10,0">
+                <Rectangle Width="80"
+                           Margin="10,0"
+                           Style="{StaticResource ProfileImage}">
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="{Binding CoverImage}"/>
+                        <ImageBrush ImageSource="{Binding CoverImage.Image}"/>
                     </Rectangle.Fill>
                 </Rectangle>
 
 
-                <Label Style="{DynamicResource SmallLabel}" 
+                <Label Style="{DynamicResource SubTitle}" 
                                    Content="{Binding Title}" 
                                    HorizontalAlignment="Center"/>
             </StackPanel>
 
-            <Button Background="#7FFF4A4A"
+            <Button Style="{StaticResource DeleteOverlay}"
                                 CommandParameter="{Binding Id}"
                                 Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 Visibility="{Binding DataContext.DeleteAvailibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
-            <Button Background="#7F7184FF"
+            <Button Style="{StaticResource Overlay}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"
                                 Command="{Binding DataContext.SelectItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 Visibility="{Binding DataContext.SelectAvailibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
@@ -63,4 +74,13 @@
 
         </Grid>
     </DataTemplate>
+
+
+    <ObjectDataProvider x:Key="WindowController"
+                            ObjectType="{x:Type controller:WindowController}"
+                            MethodName="get_Instance"/>
+
+    <ObjectDataProvider x:Key="WindowControlVM"
+                        ObjectType="{x:Type viewmodel:WindowSelectViewModel}"/>
+
 </ResourceDictionary>
