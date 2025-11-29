@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{DynamicResource ElementFontSize}"/>
+        <Style.Triggers>
+            <Trigger Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="Paragraph" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+</ResourceDictionary>

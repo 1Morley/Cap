@@ -7,16 +7,11 @@ using WPFCap.Models.Interfaces;
 
 namespace WPFCap.Models.InputModels
 {
-    public class InputProjectModel: ProjectModel, IDuplicate<ProjectModel>
+    public class InputProjectModel : ProjectModel, IDuplicate<ProjectModel>
     {
         public const string DEFAULT_PROJECT_TITLE = "New Project";
-        public new string Title
+        public InputProjectModel()
         {
-            get { return base.Title; }
-            set { base.SetTitle(value); }
-        }
-        public InputProjectModel() 
-        { 
             ResetValues();
         }
 
@@ -30,10 +25,7 @@ namespace WPFCap.Models.InputModels
         public void ResetValues()
         {
             Title = DEFAULT_PROJECT_TITLE;
-
+            CoverImage = null;
         }
-
-
-
     }
 }

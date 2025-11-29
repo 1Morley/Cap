@@ -1,0 +1,62 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="TextBox">
+        <Setter Property="Margin" Value="10,5"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderColor}"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource ElementBorderThickness}"/>
+
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundColor}"/>
+        <Setter Property="Padding" Value="{DynamicResource InputPadding}"/>
+
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="{DynamicResource ElementBoldWeight}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputTextColor}"/>
+
+        <Setter Property="MaxWidth" Value="400"/>
+        <Setter Property="FontSize" Value="{DynamicResource ElementFontSize}"/>
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource InputCornerCurve}"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                                      VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                      FontWeight="{TemplateBinding FontWeight}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+
+                <Setter Property="BorderBrush" Value="{DynamicResource FocusInputBorderColor}"/>
+                <Setter Property="Background" Value="{DynamicResource FocusInputBackgroundColor}"/>
+                <Setter Property="Foreground" Value="{DynamicResource FocusInputTextColor}"/>
+                <Setter Property="IsReadOnly" Value="False"/>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource FocusInputBorderColor}"/>
+                <Setter Property="Background" Value="{DynamicResource FocusInputBackgroundColor}"/>
+                <Setter Property="Foreground" Value="{DynamicResource FocusInputTextColor}"/>
+                <Setter Property="IsReadOnly" Value="False"/>
+            </Trigger>
+
+            <Trigger Property="IsFocused" Value="False">
+                <Setter Property="IsReadOnly" Value="True"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+</ResourceDictionary>

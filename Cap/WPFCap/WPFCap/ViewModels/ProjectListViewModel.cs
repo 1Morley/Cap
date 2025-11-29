@@ -3,183 +3,123 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using WPFCap.Controllers;
 using WPFCap.Models;
 using WPFCap.Models.InputModels;
-using WPFCap.Models.Interfaces;
 
 namespace WPFCap.ViewModels
 {
     public class ProjectListViewModel: PageSelectViewModel<ProjectModel>
     {
-
-        private CollectionController<ProjectModel> _projectList {  get; set; }
-        public CollectionController<ProjectModel> ProjectList
-        {
-            get { return _projectList; }
-            set
-            {
-                _projectList = value;
-                OnPropertyChanged(nameof(ProjectList));
-            }
-        }
-        public ObservableCollection<ProjectModel> ShownProjectList { get; private set; }
-
-        public ProjectViewModel ChosenProjectVM { get; }
-        public InputProjectModel InputProject { get; }
-        public SelectPictureViewModel SelectPictureVM { get; }
-        public RelayCommand AddProjectCommand { get; private set; }
-        public RelayCommand DeleteProjectCommand { get; private set; }
-        public RelayCommand SwitchDeleteModeCommand { get; private set; }
-        public RelayCommand UpdateSaveFile { get; private set; }
-        public RelayCommand LoadSaveFile { get; private set; }
-        public RelayCommand StyleTest { get; private set; }
-
-        public WindowController windowCon;
-
-        public Visibility DeleteAvailibility
+        public ObservableCollection<ProjectModel> Projects
         {
             get
             {
-                if (DeleteMode)
-                {
-                    return Visibility.Visible;
-                }
-                return Visibility.Collapsed;
+                return ModelList;
             }
         }
-        public Visibility SelectAvailibility
+
+
+        public ProjectViewModel? ProjectVM
         {
-            get
+            get { return _projectVM; }
+            private set
             {
-                if (DeleteMode)
-                {
-                    return Visibility.Collapsed;
-                }
-                return Visibility.Visible;
+                _projectVM = value;
+                OnPropertyChanged(nameof(ProjectVM));
             }
         }
+        private ProjectViewModel? _projectVM {  get; set; }
 
-        private bool _deleteMode = false;
-        private bool DeleteMode
+        public InputProjectViewModel? InputProjectVM
         {
-            get
+            get { return _inputProjectVM; }
+            private set
             {
-                return _deleteMode;
+                _inputProjectVM = value;
+                OnPropertyChanged(nameof(InputProjectVM));
             }
-            set
+        }
+        private InputProjectViewModel? _inputProjectVM {  get; set; }
+
+        public RelayCommand SelectProject { get; private set; }
+        public RelayCommand AddProject { get; private set; }
+        public RelayCommand DeleteProject { get; private set; }
+
+        public RelayCommand ToggleAddPrompt { get; private set; }
+        public RelayCommand ToggleDeletePrompt { get; private set; }
+
+        public RelayCommand ToggleSelectPrompt { get; private set; }
+
+
+        public ProjectListViewModel():base(new ProjectListModel())
+        {
+            FullList = FileController.LoadProjectList(out ProjectModel selectedProject);
+            if (selectedProject != null)
             {
-                _deleteMode = value;
-                OnPropertyChanged(nameof(DeleteAvailibility));
-                OnPropertyChanged(nameof(SelectAvailibility));
+                ProjectVM = new ProjectViewModel(selectedProject);
             }
-        }
-
-        private void SwitchDeleteMode()
-        {
-            DeleteMode = !DeleteMode;
-        }
-        public ProjectListViewModel():
-            base(new ObservableCollection<ProjectModel>(), new ObservableCollection<ProjectModel>(),3)
-        {
-            ProjectList = new CollectionController<ProjectModel>((ObservableCollection<ProjectModel>)GetFullList());
-            ShownProjectList = GetShownList();
-
-            ChosenProjectVM = new ProjectViewModel();
-            InputProject = new InputProjectModel();
-            SelectPictureVM = new SelectPictureViewModel();
-
             CreateCommands();
-
-            SetDefaultProject();
-
-            windowCon = WindowController.Instance;
         }
 
         private void CreateCommands()
         {
-            AddProjectCommand = new RelayCommand(x => AddProject());
-            DeleteProjectCommand = new RelayCommand(x =>
+            SelectItemCommand = new RelayCommand(x =>
             {
-                if(RelayCommand.ParseResultNumber(x,out int inputId))
+                if (RelayCommand.ParseResultNumber(x, out int index))
                 {
-                    DeleteProject(inputId);
+                    ProjectVM = new ProjectViewModel(GetItemFromShownIndex(index));
                 }
             });
-            SwitchDeleteModeCommand = new RelayCommand(x => SwitchDeleteMode());
-            SelectItemCommand = new RelayCommand(x =>
+            AddProject = new RelayCommand(x =>
+            {
+                if (InputProjectVM != null && InputProjectVM.ValidInputModel(out InputProjectModel inputModel))
+                {
+                    ProjectModel newProject = AddModel(inputModel);
+                    ProjectVM = new ProjectViewModel(newProject);
+                    OnPropertyChanged(nameof(Projects));
+                }
+            });
+            DeleteProject = new RelayCommand(x =>
             {
                 if (RelayCommand.ParseResultNumber(x, out int inputId))
                 {
-                    SetSelectedItem(inputId);
-                    SetChosenProject();
+                    DeleteModel(inputId);
                 }
             });
-            UpdateSaveFile = new RelayCommand(x =>
+
+            ToggleAddPrompt = new RelayCommand(x =>
             {
-                FileController.SaveFile(GetFullList());
+                if (InputProjectVM == null)
+                {
+                    InputProjectVM = new InputProjectViewModel();
+                    WindowController.Instance.CreateProjectVisible = true;
+                }
+                else
+                {
+                    InputProjectVM = null;
+                    WindowController.Instance.CreateProjectVisible = false;
+                }
             });
-            LoadSaveFile = new RelayCommand(x =>
+            ToggleDeletePrompt = new RelayCommand(x =>
             {
-                ObservableCollection <ProjectModel> loadedFile = FileController.LoadFile();
-                SetFullList(loadedFile);
-                ProjectList = new CollectionController<ProjectModel>(loadedFile);
+                WindowController.Instance.DeleteProjectVisible = !WindowController.Instance.DeleteProjectVisible;
             });
-            StyleTest = new RelayCommand(x =>
+            ToggleSelectPrompt = new RelayCommand(x =>
             {
-                StyleController thing = new StyleController();
-                thing.UpdateColor();
+                WindowController.Instance.SelectProjectVisible = !WindowController.Instance.SelectProjectVisible;
+                
             });
         }
 
-        public void AddProject()
+        public void SaveProjectList()
         {
-            InputProject.CoverImage = SelectPictureVM.SelectedItem;
-            ProjectList.AddModel(InputProject);
-
-            SetToNewestItem();
-            UpdateShownList();
-            SetChosenProject();
-        }
-        public void DeleteProject(int id)
-        {
-            ProjectList.DeleteModel(id);
-            if(ChosenProjectVM.SelectedProject.Id == id)
+            if (ProjectVM != null)
             {
-                ChosenProjectVM.SetSelectProjectNull();
-            }
-            DeleteMode = false;
-            UpdateShownList();
-        }
-
-        private void SetChosenProject()
-        {
-            ChosenProjectVM.SetSelectProject(SelectedItem);
-            OnPropertyChanged(nameof(ChosenProjectVM));
-        }
-
-        private void SetDefaultProject()
-        {
-            CheckEmptyProjectList();
-        }
-
-
-        private void CheckEmptyProjectList()
-        {
-            if (ProjectList.ModelList.Count == 0)
-            {
-                ChosenProjectVM.SetSelectProjectNull();
+                FileController.SaveProjectList(GetFullList(), ProjectVM.Project);
             }
         }
-
-        
-        
-       
     }
 }

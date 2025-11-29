@@ -9,8 +9,6 @@ namespace WPFCap.Models.Interfaces
     public interface ICollectionModel
     {
         public int Id { get; }
-        public string Title { get; }
-
-        public void SetTitle(string title);
+        public string Title { get; set; }
     }
 }

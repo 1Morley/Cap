@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Documents;
 using WPFCap.Controllers;
 using WPFCap.Models;
+using WPFCap.Models.Interfaces;
 
 namespace WPFCap.ViewModels
 {
-    public class PageSelectViewModel<T> : INotifyPropertyChanged
+    public class PageSelectViewModel<T> : INotifyPropertyChanged where T : ICollectionModel
     {
         private T _selectedItem;
         public T SelectedItem
@@ -27,18 +28,44 @@ namespace WPFCap.ViewModels
                 OnPropertyChanged(nameof(SelectedItem));
             }
         }
-        public int GetAmountPerPage
+
+        public ObservableCollection<T> GetFullList()
+        {
+            return PageController.FullList;
+        }
+
+
+        public ObservableCollection<T> FullList 
         {
             get
             {
-                return PageController.AmountOfItemsPerPage;
+                return PageController.FullList;
+            }
+            set
+            {
+                PageController.FullList = value;
+                OnPropertyChanged(nameof(FullList));
+                OnPropertyChanged(nameof(ModelList));
+                CheckActiveOptions();
+            }
+        }
+
+
+
+
+
+        public ObservableCollection<T> ModelList
+        {
+            get
+            {
+                return PageController.ModelList;
             }
         }
         private PageListController<T> PageController { get; set; }
         public RelayCommand NextPageCommand { get; private set; }
         public RelayCommand PrevPageCommand { get; private set; }
         public RelayCommand SelectItemCommand { get; set; }
-        public Visibility NextActive 
+        public Visibility NextActive
         {
             get
             {
@@ -49,7 +76,7 @@ namespace WPFCap.ViewModels
                 return Visibility.Collapsed;
             }
         }
-        public Visibility PrevActive 
+        public Visibility PrevActive
         {
             get
             {
@@ -61,27 +88,34 @@ namespace WPFCap.ViewModels
             }
         }
 
+        public int AmountOfItemsPerPage
+        { get
+            {
+                return PageController.AmountOfItemsPerPage;
+            } 
+        }
 
-        public PageSelectViewModel(Collection<T> FullList, ObservableCollection<T> ShownList, int AmountOfItemsPerPage)
+
+        public PageSelectViewModel(PageListController<T> pageListController)
         {
-            PageController = new PageListController<T>(FullList, ShownList, AmountOfItemsPerPage);
+            PageController = pageListController;
             SetSelectedItem(0);
             CreateCommands();
-            UpdateShownList();
+            CheckActiveOptions();
         }
         private void CreateCommands()
         {
             NextPageCommand = new RelayCommand(x =>
-                {
-                    PageController.NextPage();
-                    CheckActiveOptions();
-                }
+            {
+                PageController.NextPage();
+                CheckActiveOptions();
+            }
             );
             PrevPageCommand = new RelayCommand(x =>
-                {
-                    PageController.PrevPage();
-                    CheckActiveOptions();
-                }
+            {
+                PageController.PrevPage();
+                CheckActiveOptions();
+            }
             );
             SelectItemCommand = new RelayCommand(x =>
             {
@@ -92,28 +126,14 @@ namespace WPFCap.ViewModels
             });
         }
 
-        public ObservableCollection<T> GetShownList()
+        public ObservableCollection<T> GetModelList()
         {
-            return PageController.ShownList;
+            return PageController.ModelList;
         }
-        public Collection<T> GetFullList()
-        {
-            return PageController.FullList;
-        }
+        
         public T GetItemFromShownIndex(int index)
         {
             return PageController.GetSelectedItem(index);
-        }
-
-        public void SetFullList(Collection<T> NewFullList)
-        {
-            PageController.FullList = NewFullList;
-            UpdateShownList();
-        }
-        public void UpdateShownList()
-        {
-            PageController.UpdateShownList();
-            CheckActiveOptions();
         }
 
         private void CheckActiveOptions()
@@ -127,9 +147,29 @@ namespace WPFCap.ViewModels
             SelectedItem = PageController.GetSelectedItem(index);
         }
 
-        public void SetToNewestItem()
+        public T AddModel(IDuplicate<T> model)
         {
-            SelectedItem = PageController.GetNewestItem();
+            SelectedItem = PageController.AddModel(model);
+            CheckActiveOptions();
+            return SelectedItem;
+        }
+        public T AddBasicModel(T model)
+        {
+            SelectedItem = PageController.AddBasicModel(model);
+            CheckActiveOptions();
+            return SelectedItem;
+        }
+
+        public bool DeleteModel(int inputId)
+        {
+            bool result = PageController.DeleteModel(inputId);
+            CheckActiveOptions();
+            return result;
+        }
+
+        public void SelectModel(int index)
+        {
+            SelectedItem = PageController.GetSelectedItem(index);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

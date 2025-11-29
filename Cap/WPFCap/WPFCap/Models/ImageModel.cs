@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using WPFCap.Controllers;
+using WPFCap.Models.Interfaces;
 
 namespace WPFCap.Models
 {
-    public class ImageModel
+    public class ImageModel:ICollectionModel
     {
-        public string _filePath {  get; set; }
+        public string _filePath { get; set; }
         public string FilePath
         {
             get
@@ -20,13 +21,20 @@ namespace WPFCap.Models
             set
             {
                 _filePath = value;
-                Image = FileController.GetImage(FilePath);
+                Image = FileController.GetImageSource(FilePath);
             }
         }
-        public ImageSource Image { get;private set; }
+        public int Id { get; }
+
+        public string Title { get; set; }
+        public ImageSource Image { get; private set; }
+
+
 
         public ImageModel(string filePath)
         {
+            Id = 0;
+            Title = "New Image";
             FilePath = filePath;
         }
     }

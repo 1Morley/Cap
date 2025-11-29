@@ -3,27 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:mini="clr-namespace:WPFCap.Views.MiniControls"
-             xmlns:model="clr-namespace:WPFCap.Models"
+             xmlns:local="clr-namespace:WPFCap.Views.Controls"
+             xmlns:control="clr-namespace:WPFCap.Views.MiniControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ItemsControl ItemsSource="{Binding ShownProjectList}" 
-                      AlternationCount="4"
-                      Margin="20,0"
-                      ItemTemplate="{StaticResource ListProjectModelTemplate}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
 
-        <Button Content="-"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Style="{DynamicResource EqualSides}"
-                Command="{Binding SwitchDeleteModeCommand}"/>
-        <mini:PageSwitchControl/>
-    </Grid>
+    <StackPanel Orientation="Horizontal">
+        <local:ProjectDefaultControl DataContext="{Binding}"/>
+        <Grid Visibility="{Binding Source={StaticResource WindowController}, Path=SelectProjectVis}">
+            <ItemsControl ItemsSource="{Binding Projects}"
+                          AlternationCount="4"
+                          Margin="20,0,20,0" Grid.RowSpan="2">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="5">
+                            <StackPanel Margin="5,10">
+                                <Rectangle Width="80" Height="80"
+                               Margin="10,0">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="{Binding CoverImage.Image}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+
+                                <Label Content="{Binding Title}" 
+                                       HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <Button Background="Transparent"                            
+                                    Margin="5,10"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"
+                            Command="{Binding DataContext.SelectItemCommand, 
+                                      RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <control:PageSwitchControl />
+    </StackPanel>
 </UserControl>

@@ -14,7 +14,7 @@ using WPFCap.Models;
 
 namespace WPFCap.Controllers
 {
-    public class GoogleController
+    internal class GoogleController
     {
 
         private static GoogleController _instance;
@@ -101,6 +101,5 @@ namespace WPFCap.Controllers
             }
 
         }
-
     }
 }

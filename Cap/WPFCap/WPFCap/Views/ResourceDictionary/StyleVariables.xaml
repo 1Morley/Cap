@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
+
+    <sys:Double x:Key="OverlayOpacity">0.3</sys:Double>
+
+
+
+
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#FF5D6082"/>
+    <SolidColorBrush x:Key="WindowBorderColor" Color="#FF363855"/>
+    <Thickness x:Key="WindowBorderThickness">3</Thickness>
+    <CornerRadius x:Key="WindowCorner">10</CornerRadius>
+    <Thickness x:Key="WindowPadding">10</Thickness>
+
+    <SolidColorBrush x:Key="SubWindowBackgroundColor" Color="#FFBFC2E5"/>
+    <SolidColorBrush x:Key="SubWindowBorderColor" Color="#FF272A4A"/>
+    <Thickness x:Key="SubWindowBorderThickness">3</Thickness>
+    <CornerRadius x:Key="SubWindowCorner">10</CornerRadius>
+    <Thickness x:Key="SubWindowPadding">10</Thickness>
+
+    <SolidColorBrush x:Key="OptionBackgroundColor" Color="#FF5F73F2"/>
+    <SolidColorBrush x:Key="OptionBorderColor" Color="#FF6856D6"/>
+    <Thickness x:Key="OptionBorderThickness">3</Thickness>
+    <CornerRadius x:Key="OptionCorner">15</CornerRadius>
+    <Thickness x:Key="OptionPadding">8</Thickness>
+
+    <SolidColorBrush x:Key="DefaultBorderColor" Color="#FF363855"/>
+    <Thickness x:Key="DefaultThickness">3</Thickness>
+    <CornerRadius x:Key="DefaultCorner">10</CornerRadius>
+    <Thickness x:Key="DefaultPadding">10</Thickness>
+
+
+
+    <SolidColorBrush x:Key="TitleTextColor" Color="#FFF48631"/>
+    <sys:Double x:Key="TitleFontSize">30</sys:Double>
+
+    <SolidColorBrush x:Key="SubTitleTextColor" Color="#FFDD375B"/>
+    <sys:Double x:Key="SubTitleFontSize">20</sys:Double>
+
+    <SolidColorBrush x:Key="DefaultLabelTextColor" Color="#FF2C2A7C"/>
+    <sys:Double x:Key="DefaultLabelFontSize">16</sys:Double>
+
+
+    <CornerRadius x:Key="ElementCornerCurve">20</CornerRadius>
+    <Thickness x:Key="ElementPadding">10</Thickness>
+    <FontWeight x:Key="ElementBoldWeight">SemiBold</FontWeight>
+
+    <SolidColorBrush x:Key="ElementTextColor" Color="#FF96551D"/>
+    <Color x:Key="ElementBackground">#FFE6D7BC</Color>
+    <SolidColorBrush x:Key="ElementBackgroundColor"
+                     Color="{DynamicResource ElementBackground}"/>
+    <SolidColorBrush x:Key="ElementOverlayBackgroundColor" 
+                     Color="{DynamicResource ElementBackground}" 
+                     Opacity="{DynamicResource OverlayOpacity}"/>
+    <SolidColorBrush x:Key="ElementBorderColor" Color="#FFD98E30"/>
+
+    <SolidColorBrush x:Key="FocusElementTextColor" Color="#FF811D96"/>
+    <Color x:Key="FocusElementBackground">#FFE6BCE4</Color>
+    <SolidColorBrush x:Key="FocusElementBackgroundColor"
+                     Color="{DynamicResource FocusElementBackground}"/>
+    <SolidColorBrush x:Key="FocusElementOverlayBackgroundColor" 
+                     Color="{DynamicResource FocusElementBackground}" 
+                     Opacity="{DynamicResource OverlayOpacity}"/>
+    <SolidColorBrush x:Key="FocusElementBorderColor" Color="#FFC630D9"/>
+
+    <Thickness x:Key="ElementBorderThickness">3.5</Thickness>
+    <sys:Double x:Key="ElementFontSize">12.5</sys:Double>
+
+
+
+
+
+
+    <CornerRadius x:Key="InputCornerCurve">20</CornerRadius>
+    <Thickness x:Key="InputPadding">10</Thickness>
+
+    <SolidColorBrush x:Key="InputTextColor" Color="#FF96551D"/>
+    <SolidColorBrush x:Key="InputBackgroundColor" Color="#FFE6D7BC"/>
+    <SolidColorBrush x:Key="InputBorderColor" Color="#FFD98E30"/>
+
+    <SolidColorBrush x:Key="FocusInputTextColor" Color="#FF811D96"/>
+    <SolidColorBrush x:Key="FocusInputBackgroundColor" Color="#FFE6BCE4"/>
+    <SolidColorBrush x:Key="FocusInputBorderColor" Color="#FFC630D9"/>
+
+
+    <SolidColorBrush x:Key="DeleteTextColor" Color="White"/>
+    <Color x:Key="DeleteBackground">Blue</Color>
+    <SolidColorBrush x:Key="DeleteBackgroundColor"
+                     Color="{DynamicResource FocusElementBackground}"/>
+    <SolidColorBrush x:Key="DeleteOverLayBackgroundColor" 
+                     Color="{DynamicResource FocusElementBackground}" 
+                     Opacity="{DynamicResource OverlayOpacity}"/>
+    <SolidColorBrush x:Key="DeleteBorderColor" Color="Red"/>
+
+
+
+    <SolidColorBrush x:Key="FocusDeleteTextColor" Color="Red"/>
+    <Color x:Key="FocusDeleteBackground">Blue</Color>
+    <SolidColorBrush x:Key="FocusDeleteBackgroundColor"
+                     Color="{DynamicResource FocusElementBackground}"/>
+    <SolidColorBrush x:Key="FocusDeleteOverLayBackgroundColor" 
+                     Color="{DynamicResource FocusElementBackground}" 
+                     Opacity="{DynamicResource OverlayOpacity}"/>
+    <SolidColorBrush x:Key="FocusDeleteBorderColor" Color="White"/>
+
+    <CornerRadius x:Key="ProfileCornerCurve">30</CornerRadius>
+    <sys:Double x:Key="ProfileRounding">30</sys:Double>
+    <sys:Double x:Key="ProfileSize">70</sys:Double>
+    <sys:Double x:Key="MainProfileSize">50</sys:Double>
+
+
+</ResourceDictionary>

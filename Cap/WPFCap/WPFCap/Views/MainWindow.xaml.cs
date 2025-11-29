@@ -18,42 +18,47 @@ namespace WPFCap
     /// </summary>
     public partial class MainWindow : Window
     {
-        DragItemController dragItemController;
-        Point offset;
+        AdjustPositionController positionControl;
         public MainWindow()
         {
             InitializeComponent();
-            dragItemController = new DragItemController(MainCanvas);
-
+            positionControl = new AdjustPositionController(MainCanvas);
         }
 
-        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_ClearFocusOnElement(object sender, MouseButtonEventArgs e)
         {
             if (!(e.OriginalSource is TextBox))
             {
                 FocusManager.SetFocusedElement(this, null);
                 Keyboard.ClearFocus();
             }
-
         }
 
         private void MainCanvas_DragOver(object sender, DragEventArgs e)
         {
-            MainCanvas.Background = new SolidColorBrush(Color.FromArgb(100, 0, 0, 0));
-            dragItemController.BackgroundDragOver(e);
-        }
-
-        private void DragWindow_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                dragItemController.DragMouseMove(e, (UIElement)sender);
-            }
+            positionControl.BackgroundDragOver(e);
         }
 
         private void MainCanvas_Drop(object sender, DragEventArgs e)
         {
-            dragItemController.BackgroundDrop(e);
+            positionControl.BackgroundDrop(e);
+        }
+
+        private void ViewWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            positionControl.DragMouseMove(e, (UIElement)sender);
+        }
+        private void TopLine_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            positionControl.MoveZoneMouseDown(e);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (DataContext is MainWindowViewModel dataContext)
+            {
+                dataContext.Close();
+            }
         }
     }
 }

@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPFCap.Models;
-using WPFCap.Models.SaveModel;
+using WPFCap.Models.SaveModels;
 
 namespace WPFCap.Controllers
 {
@@ -20,59 +21,97 @@ namespace WPFCap.Controllers
             WriteIndented = true,
         };
 
-        private static string GetSelectedImageFolderStr(string selectedFolder)
+        private static readonly string[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+
+        private static string GetDefaultFolder()
         {
-            string ImageDirectory = GetDefaultImageFolderStr();
-            return  $"{ImageDirectory}\\{selectedFolder}";
+            string baseFolder = Path.Combine(Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData),"WPFCap",
+                "SaveData");
+            Directory.CreateDirectory(baseFolder);
+            return baseFolder;
         }
-        private static string GetDefaultImageFolderStr()
+
+        private static string GetImageFolder()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "DefaultImages");
+            string imageFolder = Path.Combine(GetDefaultFolder(), "Images");
+            Directory.CreateDirectory(imageFolder);
+            return imageFolder;
         }
 
-        //public static Collection<ImageSource> GetImageList(string selectedFolder)
-        //{
-        //    string filePath = GetSelectedImageFolderStr(selectedFolder);
-
-        //    Collection<ImageSource> DisplayImageList = new Collection<ImageSource>();
-
-        //    if (Directory.Exists(filePath)) {
-        //        string[] imageFiles = Directory.GetFiles(filePath,"*.*");
-
-        //        foreach (string FileName in imageFiles)
-        //        {
-        //            DisplayImageList.Add(GetImage(FileName));
-        //        }
-        //    }
-        //    return DisplayImageList;
-        //}
-        public static Collection<ImageModel> GetImageList(string selectedFolder)
+        private static string GetCoverImageFolder()
         {
-            string filePath = GetSelectedImageFolderStr(selectedFolder);
+            string coverImageFolder = Path.Combine(GetImageFolder(), "CoverImages");
+            Directory.CreateDirectory(coverImageFolder);
+            return coverImageFolder;
+        }
 
-            Collection<ImageModel> DisplayImageList = new Collection<ImageModel>();
+        private static string GetSaveFileFolder()
+        {
+            string saveFileFolder = Path.Combine(GetDefaultFolder(), "SaveFiles");
+            Directory.CreateDirectory(saveFileFolder);
+            return saveFileFolder;
+        }
 
-            if (Directory.Exists(filePath)) {
-                string[] imageFiles = Directory.GetFiles(filePath,"*.*");
+        private static string GetSaveProjectDataFolder()
+        {
+            string saveProjectFolder = Path.Combine(GetSaveFileFolder(), "ProjectData");
+            Directory.CreateDirectory(saveProjectFolder);
+            return saveProjectFolder;
+        }
+        private static string GetSaveDesignFolder()
+        {
+            string saveDesignFolder = Path.Combine(GetSaveFileFolder(), "Design");
+            Directory.CreateDirectory(saveDesignFolder);
+            return saveDesignFolder;
+        }
 
-                foreach (string fileName in imageFiles)
+
+
+        public static ObservableCollection<ImageModel> GetCoverImageList()
+        {
+            return GetImageList(GetCoverImageFolder());
+
+        }
+
+        private static ObservableCollection<ImageModel> GetImageList(string filePath)
+        {
+            ObservableCollection<ImageModel> ImageList = new ObservableCollection<ImageModel>();
+            string[] imageFiles = Directory.GetFiles(filePath).Where(file => CheckExtension(validImageExtensions, file)).ToArray();
+
+            foreach (string fileName in imageFiles)
+            {
+                ImageList.Add(new ImageModel(fileName));
+            }
+            return ImageList;
+        }
+
+        private static bool CheckExtension(string[] validExtensions, string file)
+        {
+            string regex = ".*(\\.(.+))";
+            Match match = Regex.Match(file, regex);
+            if (match.Success)
+            {
+                string ending = match.Groups[1].Value;
+                foreach (var extension in validExtensions)
                 {
-
-                    DisplayImageList.Add(new ImageModel(fileName));
+                    if(ending == extension)
+                    {
+                        return true;
+                    }
                 }
             }
-            return DisplayImageList;
+            return false;
         }
-
         public static ImageModel GetEmptyImage()
         {
-            string ImageDirectory = GetDefaultImageFolderStr();
-            string fileName = $"{ImageDirectory}\\DefaultMissingImage.png";
+            string ImageDirectory = GetImageFolder();
+            string fileName = $"{ImageDirectory}\\DEFAULT_MissingImage.png";
 
             return new ImageModel(fileName);
         }
 
-        public static ImageSource GetImage(string fileName)
+        public static ImageSource GetImageSource(string fileName)
         {
             if (File.Exists(fileName))
             {
@@ -87,7 +126,7 @@ namespace WPFCap.Controllers
             return null;
         }
 
-        public static bool InputLocalFile(out string fileName)
+        public static bool InputLocalFileName(out string fileName, out string filePath)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "test";
@@ -95,53 +134,121 @@ namespace WPFCap.Controllers
             bool? result = dialog.ShowDialog();
             if (result == true)
             {
-                fileName = dialog.FileName;
+                filePath = dialog.FileName;
+                fileName = dialog.SafeFileName;
                 return true;
             }
             fileName = string.Empty;
+            filePath = string.Empty;
             return false;
         }
 
+        public static void SaveProjectList(Collection<ProjectModel> ProjectList, ProjectModel? lastSelected)
+        {
+            string filePath = GetSaveProjectDataFolder();
 
-        public static async void SaveFile(Collection<ProjectModel> input)
+            Collection<ProjectSaveFile> saveFiles = new Collection<ProjectSaveFile>();
+            foreach (var item in ProjectList)
+            {
+                ProjectSaveFile projSave = new ProjectSaveFile(item);
+                if(item == lastSelected)
+                {
+                    projSave.LastOpen = true;
+                }
+                saveFiles.Add(projSave);
+            }
+            SaveFile(saveFiles, "ProjectList");
+        }
+
+        private static async void SaveFile<T>(T InputFile, string fileName)
         {
             try
             {
-                Collection<ProjectSaveFile> saveFile = new Collection<ProjectSaveFile>();
-                foreach (var model in input)
-                {
-                    ProjectSaveFile save = new ProjectSaveFile(model);
-                    saveFile.Add(save);
-                }
-
-                using FileStream stream = File.Create("SaveTest.json");
-                await JsonSerializer.SerializeAsync(stream, saveFile, _jsonOptions);
+                string fileLocation = Path.Combine(GetSaveProjectDataFolder(), "ProjectList.json");
+                using FileStream stream = File.Create(fileLocation);
+                await JsonSerializer.SerializeAsync(stream, InputFile, _jsonOptions);
             }
-            catch { }
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("SAVE FILE FAILED");
+                Console.WriteLine(ex.Message);
+            }
         }
 
-        public static ObservableCollection<ProjectModel> LoadFile()
+        public static ObservableCollection<ProjectModel> LoadProjectList(out ProjectModel? selected)
         {
-            if (File.Exists("SaveTest.json"))
+            string fileLocation = Path.Combine(GetSaveProjectDataFolder(), "ProjectList.json");
+            Collection<ProjectSaveFile> saveFiles = LoadFile<Collection<ProjectSaveFile>>(fileLocation);
+
+            ObservableCollection<ProjectModel> projectList = new ObservableCollection<ProjectModel>();
+            selected = null;
+
+            if(saveFiles != null)
+            {
+                foreach (var item in saveFiles)
+                {
+                    ProjectModel projectModel = item.ConvertBack();
+                    if (item.LastOpen)
+                    {
+                        selected = projectModel;
+                    }
+                    projectList.Add(projectModel);
+                }
+            }
+            return projectList;
+        }
+
+        private static T LoadFile<T>(string fileName)
+        {
+            if (File.Exists(fileName))
             {
                 try
                 {
-                    using FileStream stream = File.OpenRead("SaveTest.json");
-                    ObservableCollection<ProjectSaveFile> saveFile = JsonSerializer.Deserialize<ObservableCollection<ProjectSaveFile>>(stream, _jsonOptions);
-                    ObservableCollection < ProjectModel > returnList = new ObservableCollection<ProjectModel >();
-                    int index = 0;
-                    foreach (var model in saveFile)
-                    {
-                        returnList.Add(model.ConvertBack(index++));
-                    }
-                    return returnList;
+                    using FileStream stream = File.OpenRead(fileName);
+                    T? output = JsonSerializer.Deserialize<T>(stream, _jsonOptions);
+                    return output;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("LOAD FILE FAILED");
+                    Console.WriteLine(ex.Message);
+                }
             }
+            return default;
+        }
 
-            return new ObservableCollection<ProjectModel>();
+        public static ImageModel AddCoverImageToList()
+        {
+            if (InputLocalFileName(out string fileName, out string filePath))
+            {
+                if(CheckExtension(validImageExtensions, fileName))
+                {
+                    string fileLocation = Path.Combine(GetCoverImageFolder(), fileName);
+                    File.Copy(filePath, fileLocation, overwrite: true);
+                    return new ImageModel(fileLocation);
+                }
+            }
+            return null;
 
         }
+
+        public static ObservableCollection<EntryModel> GetEntryList(int projectId, out EntryModel? selected)
+        {
+            ObservableCollection<EntryModel> entryModels = new ObservableCollection<EntryModel>();
+            if (true)
+            {
+                selected = new EntryModel(0, "egg", "egggggg");
+
+                entryModels.Add(selected);
+                entryModels.Add(new EntryModel(1, "new entry", "blah blah blah"));
+                entryModels.Add(new EntryModel(2, "test", "tttesssttt"));
+            }
+            else
+            {
+                selected = null;
+            }
+            return entryModels;
+        }
+
     }
 }

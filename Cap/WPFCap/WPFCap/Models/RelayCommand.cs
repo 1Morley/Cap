@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WPFCap.Models.Enums;
 
 namespace WPFCap.Models
 {
@@ -33,7 +32,6 @@ namespace WPFCap.Models
         {
             execute(parameter);
         }
-
         public static bool ParseResultNumber(object input, out int parsedInput)
         {
             if (input != null)
@@ -43,5 +41,6 @@ namespace WPFCap.Models
             parsedInput = -1;
             return false;
         }
+
     }
 }

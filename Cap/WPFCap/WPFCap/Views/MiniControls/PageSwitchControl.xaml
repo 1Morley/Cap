@@ -8,14 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Button Content="&lt;"
-                Style="{StaticResource EqualSides}"
                 Command="{Binding PrevPageCommand}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 Visibility="{Binding PrevActive}"/>
-        
+
         <Button Content=">" 
-                Style="{StaticResource EqualSides}"
                 Command="{Binding NextPageCommand}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"

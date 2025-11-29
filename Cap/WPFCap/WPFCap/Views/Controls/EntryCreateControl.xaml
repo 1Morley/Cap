@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPFCap.Views.Controls"
-             xmlns:view="clr-namespace:WPFCap.ViewModels"
-             xmlns:enum="clr-namespace:WPFCap.Models.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -15,47 +12,34 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel>
-                <Label Content="CREATE ENTRY" Style="{StaticResource Title}"/>
-                <StackPanel DataContext="{Binding InputEntry}">
-                    <TextBox Text="{Binding Title}"/>
-                    <TextBox Text="{Binding EntryNotes}"/>
-                    <Label Content="Link:" HorizontalAlignment="Center"/>
-                    <TextBox Text="{Binding EntryLink}"/>
-                    <Label Content="Local File:" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding EntryLocalFile}"/>
-                    <Label Content="Google File:" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding EntryGoogleFile.FileName}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Add Local File"
-                        Command="{Binding SetInputEntryFile}"/>
-                </StackPanel>
-            </StackPanel>
-
-            <ScrollViewer Height="450" Grid.Column="1">
-                <ItemsControl ItemsSource="{Binding GoogleList}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding FileName}"
-                                    Command="{Binding DataContext.SetGoogleFile, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"
-                                    />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-
         </Grid>
 
+
+        <StackPanel DataContext="{Binding InputEntryVM}">
+            <Label Content="CREATE ENTRY"/>
+            <StackPanel DataContext="{Binding InputModel}">
+                <TextBox Text="{Binding Title}"/>
+                <TextBox Text="{Binding EntryNotes}"/>
+                <Label Content="Link:" HorizontalAlignment="Center"/>
+                <TextBox Text="{Binding EntryLink}"/>
+                <Label Content="Local File:" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding EntryLocalFile}"/>
+                <Label Content="Google File:" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding EntryGoogleFile.FileName}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Add Local File"
+                        Command="{Binding InputLocalFile}"/>
+            </StackPanel>
+        </StackPanel>
+
         <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                Command="{Binding AddEntryCommand}"
+                Command="{Binding AddEntry}"
                 Content="Submit"/>
-        
+
+        <Button HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Content="x"
+                Command="{Binding AddEntryPrompt}"/>
     </Grid>
 </UserControl>

@@ -5,15 +5,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-using WPFCap.Controllers;
-using WPFCap.Models.InputModels;
 using WPFCap.Models.Interfaces;
 
 namespace WPFCap.Models
 {
-    public class ProjectModel : INotifyPropertyChanged,ICollectionModel
+    public class ProjectModel : INotifyPropertyChanged, ICollectionModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public int Id { get; }
@@ -25,7 +21,7 @@ namespace WPFCap.Models
             {
                 return _title;
             }
-            private set
+            set
             {
                 _title = value;
                 OnPropertyChanged(nameof(Title));
@@ -46,23 +42,13 @@ namespace WPFCap.Models
             }
         }
 
-        public CollectionController<EntryModel> EntryList { get; private set; }
 
         public ProjectModel() { }
         public ProjectModel(int id, string title, ImageModel cover)
-            : this(id,title,cover,new CollectionController<EntryModel>(new ObservableCollection<EntryModel>())) {}
-        public ProjectModel(int id, string title, ImageModel cover, CollectionController<EntryModel> entryModels)
         {
             Id = id;
             Title = title;
             CoverImage = cover;
-            EntryList = entryModels;
-
-            InputEntryModel inputEntry = new InputEntryModel();
-        }
-        public void SetTitle(string title)
-        {
-            Title = title;
         }
 
         void OnPropertyChanged(string propertyName)

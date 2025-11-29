@@ -29,7 +29,7 @@ namespace WPFCap.Models
 
         public File GetFile()
         {
-            return new File() { Name = FileName, Id = Id, WebViewLink = WebViewLink};
+            return new File() { Name = FileName, Id = Id, WebViewLink = WebViewLink };
         }
     }
 }

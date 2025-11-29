@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFCap.Models.Enums;
 using WPFCap.Models.Interfaces;
 
 namespace WPFCap.Models.InputModels
@@ -41,7 +39,7 @@ namespace WPFCap.Models.InputModels
             }
             set
             {
-                if(value != string.Empty)
+                if (value != string.Empty)
                 {
                     ResetEntryTypes();
                 }
@@ -67,12 +65,6 @@ namespace WPFCap.Models.InputModels
                 OnPropertyChanged(nameof(EntryGoogleFile));
             }
         }
-
-        public new string Title
-        {
-            get { return base.Title; }
-            set { base.SetTitle(value); }
-        }
         public InputEntryModel()
         {
             ResetValues();
@@ -83,15 +75,15 @@ namespace WPFCap.Models.InputModels
             EntryModel duplicatedModel = null;
             if (!string.IsNullOrEmpty(EntryLocalFile))
             {
-                duplicatedModel = new FileEntryModel(newId, Title, EntryNotes, new FileStrategy(EntryLocalFile));
+                duplicatedModel = new EntryFileModel(newId, Title, EntryNotes, new FileStrategy(EntryLocalFile));
             }
             else if (!string.IsNullOrEmpty(EntryLink))
             {
-                duplicatedModel = new FileEntryModel(newId, Title, EntryNotes, new LinkStrategy(EntryLink));
+                duplicatedModel = new EntryFileModel(newId, Title, EntryNotes, new LinkStrategy(EntryLink));
             }
             else if (EntryGoogleFile != null)
             {
-                duplicatedModel = new FileEntryModel(newId,Title,EntryNotes,new GoogleStrategy(EntryGoogleFile));
+                duplicatedModel = new EntryFileModel(newId, Title, EntryNotes, new GoogleStrategy(EntryGoogleFile));
             }
             else
             {
@@ -115,6 +107,5 @@ namespace WPFCap.Models.InputModels
             EntryNotes = DEFAULT_ENTRY_NOTES;
             ResetEntryTypes();
         }
-
     }
 }

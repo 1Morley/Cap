@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFCap.Models.Interfaces
 {
-    interface IOpenStrategy
+    internal interface IOpenStrategy
     {
         public void Open();
     }
